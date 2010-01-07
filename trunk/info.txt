@@ -1,0 +1,11 @@
+"AddonInfo"
+{
+	"name"			"WDamageSystem"
+	"version"		"SVN"
+	"up_date"		""
+	"author_name"	"Warrior xXx - kevkev"
+	"author_email"	"kevkevm@gmail.com"
+	"author_url"	""
+	"info"			"A prop and entity damage system."
+	"override"		"0"
+}
