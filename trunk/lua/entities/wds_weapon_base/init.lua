@@ -60,7 +60,7 @@ function ENT:FireShot() // Overwrite this for missile launchers or things that h
 	local ed = EffectData()
 		ed:SetOrigin(Pos)
 		ed:SetStart(tr.HitPos)
-	util.Effect(self.TraceEffect or "wds_weapon_base_trace",ed)
+	util.Effect(self.TraceEffect,ed)
 	if self.ShootSound then self:EmitSound(self.ShootSound) end
 	self:SetNextFire(CurTime()+self.FireDelay)
 end

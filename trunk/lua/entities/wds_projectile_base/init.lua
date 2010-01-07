@@ -4,8 +4,8 @@ AddCSLuaFile("shared.lua")
 include('shared.lua')
 
 // Edit these variables on your own ent.
-ENT.ExplodeEffect = "wds_projectile_plasmapulse_explosion"
-ENT.TrailEffect = "wds_projectile_plasmapulse_trail"
+ENT.ExplodeEffect = "wds_projectile_base_explosion"
+ENT.TrailEffect = "wds_projectile_base_trail"
 ENT.Velocity = 1000
 ENT.Radius = 10
 ENT.Damage = 10
@@ -23,7 +23,7 @@ function ENT:Initialize()
 	end
 	local ed = EffectData()
 		ed:SetEntity(self)
-	util.Effect(self.TrailEffect or "wds_projectile_base_trail",ed)
+	util.Effect(self.TrailEffect,ed)
 end
 
 AccessorFunc(ENT,"Damage","Damage",FORCE_NUMBER)
@@ -45,5 +45,5 @@ function ENT:Explode(data)
 	local ed = EffectData()
 		ed:SetOrigin(data.HitPos)
 		ed:SetMagnitude(self.Radius)
-	util.Effect(self.ExplodeEffect or "wds_projectile_base_explosion",ed)
+	util.Effect(self.ExplodeEffect,ed)
 end
