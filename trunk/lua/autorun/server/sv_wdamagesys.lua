@@ -149,17 +149,25 @@ function WDS.AttackTrace(st,en,fl,dmg,rad,att,inf)
 	return tr
 end
 
-function WDS.Explosion(pos,rad,dmg,fl,att,inf)
+function WDS.Explosion(pos,rad,dmg,fl,att,inf,trc)
 	fl = fl or {}
 	for _,v in pairs(ents.FindInSphere(pos,rad)) do
 		if !table.HasValue(fl,v) then
-			local t = WDS.TraceLine(pos,v:GetPos(),(fl or {}))
-			local damage = dmg-(v:GetPos():Distance(pos)/2)
-			if damage <= 0 then damage = 1 end
-			if (t.Entity:IsPlayer() and t.Entity:Alive()) or t.Entity:IsNPC() then
-				t.Entity:TakeDamage(damage*1.1,att,inf)
-			elseif t.Entity and t.Entity:IsValid() and t.Entity == v then
-				WDS.TakeExDamage(t.Entity,damage,att,inf)
+			local t
+			if trc then
+				t = WDS.TraceLine(pos,v:GetPos(),(fl or {}))
+			end
+			local dam = dmg-math.Round((dmg/100)*(v:GetPos():Distance(pos)/rad)*100)
+			print(v,t and t.Entity or nil, dam)
+			if dam <= 0 then dam = 1 end
+			if v and v:IsValid() then
+				local Val = false
+				if trc then
+					Val = t.Entity == v
+				else
+					Val = true
+				end
+				if Val then WDS.TakeExDamage(v,dam,att,inf) end
 			end
 		end
 	end
