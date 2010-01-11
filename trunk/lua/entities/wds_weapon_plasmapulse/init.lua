@@ -11,7 +11,7 @@ ENT.ChargeSound		= "wds/weapons/plasmapulse/powerup.wav"
 ENT.ShootSound		= "wds/weapons/plasmapulse/shoot.wav"
 ENT.ChargeTime		= 2
 ENT.FireDelay		= 5
-ENT.Damage			= 4
+ENT.Damage			= 150
 ENT.Model			= "models/props_c17/canister01a.mdl"
 ENT.Class			= "wds_weapon_plasmapulse"
 

@@ -44,6 +44,28 @@ function ENT:PhysicsCollide(data,physobj)
 	if self and self:IsValid() then self:Remove() end
 end
 
+function ENT:PhysicsUpdate()
+	local Vel = self:GetVelocity()
+	local t = WDS.TraceLine(self:GetPos(),self:GetUp()*Vel,self)
+	if t.Hit then
+		local Sp = Vel-t.Entity:GetVelocity()
+		if Sp < 0 then
+			Sp = -Sp
+		end
+		self:Explode( // Yay for faking collision data
+			{HitPos = t.HitPos,
+			HitEntity = t.Entity,
+			OurOldVelocity = Vel,
+			HitObject = t.Entity:GetPhysicsObjectNum(t.PhysicsBone)
+			,DeltaTime = 0,
+			TheirOldVelocity = t.Entity:GetVelocity()
+			,Speed = Sp,
+			HitNormal = t.HitNormal}
+			)
+		if self and self:IsValid() then self:Remove() end
+	end
+end
+
 function ENT:Explode(data)
 	WDS.Explosion(data.HitPos,self.Radius,self.Damage,{self},self.WDSO,self)
 	local ed = EffectData()

@@ -155,9 +155,9 @@ function WDS.Explosion(pos,rad,dmg,fl,att,inf,trc)
 		if !table.HasValue(fl,v) then
 			local t
 			if trc then
-				t = WDS.TraceLine(pos,v:GetPos(),(fl or {}))
+				t = WDS.TraceLine(pos,v:NearestPoint(pos),(fl or {}))
 			end
-			local dam = dmg-math.Round((dmg/100)*(v:GetPos():Distance(pos)/rad)*100)
+			local dam = dmg-math.Round((dmg/100)*(v:NearestPoint(pos):Distance(pos)/rad)*100)
 			//print(v,t and t.Entity or nil, dam)
 			if dam <= 0 then dam = 1 end
 			if v and v:IsValid() then
