@@ -30,7 +30,7 @@ function ENT:FireShot()
 	local ed = EffectData()
 		ed:SetEntity(self)
 		ed:SetOrigin(self.ShootDirection*self.ShootOffset)
-		ed:SetScale(self.ChargeTime+0.1)
+		ed:SetScale(self.ChargeTime)
 	util.Effect(self.ChargeEffect,ed)
 	self:SetNextFire(CurTime()+self.FireDelay)
 	if self.ChargeSound then self:EmitSound(self.ChargeSound) end
