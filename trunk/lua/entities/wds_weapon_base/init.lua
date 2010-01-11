@@ -3,15 +3,15 @@ AddCSLuaFile("shared.lua")
 include('shared.lua')
 
 // Edit these variables on your own ent.
-ENT.ShootDirection = Vector(0,0,1)
-ENT.ExplodeRadius = 10
-ENT.TraceEffect = "wds_tracer_base"
-ENT.ShootOffset = 10
-ENT.ShootSound = ""
-ENT.FireDelay = 1
-ENT.Damage = 40
-ENT.Model = "models/props_c17/canister01a.mdl"
-ENT.Class = "wds_weapon_base"
+ENT.ShootDirection	= Vector(0,0,1)
+ENT.ExplodeRadius	= 10
+ENT.TraceEffect		= "wds_tracer_base"
+ENT.ShootOffset		= 10
+ENT.ShootSound		= ""
+ENT.FireDelay		= 1
+ENT.Damage			= 40
+ENT.Model			= "models/props_c17/canister01a.mdl"
+ENT.Class			= "wds_weapon_base"
 
 ENT._Wire_Out = {}
 ENT.Wire_Out = {}
