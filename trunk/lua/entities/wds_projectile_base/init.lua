@@ -24,6 +24,9 @@ function ENT:Initialize()
 		phys:EnableDrag(self.Drag)
 		phys:SetVelocityInstantaneous(self:GetUp()*self.Velocity)
 	end
+	if type(self.PhysicsSimulate) == "function" then
+		self:StartMotionController()
+	end
 	local ed = EffectData()
 		ed:SetEntity(self)
 	util.Effect(self.TrailEffect,ed)
