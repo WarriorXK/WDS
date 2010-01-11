@@ -6,7 +6,7 @@ include('shared.lua')
 ENT.ShootDirection	= Vector(0,0,1)
 ENT.ExplodeRadius	= 10
 ENT.TraceEffect		= "wds_weapon_base_trace"
-ENT.ShootOffset		= 10
+ENT.ShootOffset		= 40
 ENT.ShootSound		= ""
 ENT.FireDelay		= 1
 ENT.Damage			= 40

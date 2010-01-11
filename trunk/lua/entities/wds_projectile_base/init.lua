@@ -3,12 +3,14 @@ AddCSLuaFile("shared.lua")
 include('shared.lua')
 
 // Edit these variables on your own ent.
-ENT.ExplodeEffect = "wds_projectile_base_explosion"
-ENT.TrailEffect = "wds_projectile_base_trail"
-ENT.Velocity = 1000
-ENT.Radius = 10
-ENT.Damage = 10
-ENT.Model = "models/wds/bullet.mdl"
+ENT.ExplodeEffect	= "wds_projectile_base_explosion"
+ENT.TrailEffect		= "wds_projectile_base_trail"
+ENT.Velocity		= 1000
+ENT.Gravity			= false
+ENT.Radius			= 10
+ENT.Damage			= 10
+ENT.Model			= "models/wds/bullet.mdl"
+ENT.Drag			= false
 
 function ENT:Initialize()
 	self:SetModel(self.Model)
@@ -18,8 +20,8 @@ function ENT:Initialize()
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:Wake()
-		phys:EnableGravity(false)
-		phys:EnableDrag(false)
+		phys:EnableGravity(self.Gravity)
+		phys:EnableDrag(self.Drag)
 		phys:SetVelocityInstantaneous(self:GetUp()*self.Velocity)
 	end
 	local ed = EffectData()
