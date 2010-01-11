@@ -20,7 +20,7 @@ function ENT:Initialize()
 		phys:Wake()
 		phys:EnableGravity(false)
 		phys:EnableDrag(false)
-		phys:ApplyForceCenter(self:GetUp()*self.Velocity)
+		phys:SetVelocityInstantaneous(self:GetUp()*self.Velocity)
 	end
 	local ed = EffectData()
 		ed:SetEntity(self)
