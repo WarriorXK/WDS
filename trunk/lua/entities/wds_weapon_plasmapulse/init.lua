@@ -4,6 +4,7 @@ include('shared.lua')
 
 ENT.ShootDirection	= Vector(0,0,1)
 ENT.ExplodeRadius	= 10
+ENT.ChargeEffect	= "wds_weapon_plasmapulse_charge"
 ENT.TraceEffect		= ""
 ENT.ShootOffset		= 40
 ENT.ChargeSound		= ""
@@ -30,7 +31,7 @@ function ENT:FireShot()
 		ed:SetEntity(self)
 		ed:SetOrigin(self.ShootDirection*self.ShootOffset)
 		ed:SetScale(self.ChargeTime+0.1)
-	util.Effect("wds_weapon_plasmapulse_charge",ed)
+	util.Effect(self.ChargeEffect,ed)
 	self:SetNextFire(CurTime()+self.FireDelay)
 	if self.ChargeSound then self:EmitSound(self.ChargeSound) end
 end

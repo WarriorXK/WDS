@@ -5,7 +5,7 @@ include('shared.lua')
 // Edit these variables on your own ent.
 ENT.ShootDirection	= Vector(0,0,1)
 ENT.ExplodeRadius	= 10
-ENT.TraceEffect		= "wds_tracer_base"
+ENT.TraceEffect		= "wds_weapon_base_trace"
 ENT.ShootOffset		= 10
 ENT.ShootSound		= ""
 ENT.FireDelay		= 1
@@ -32,6 +32,8 @@ function ENT:Initialize()
 	self.Outputs = Wire_CreateOutputs(self,{"Can Fire"})
 end
 
+AccessorFunc(ENT,"NextFire","NextFire",FORCE_NUMBER)
+
 function ENT:SpawnFunction(p,t)
 	if !t.Hit then return end
 	local e = ents.Create(self.Class or "wds_weapon_base")
@@ -48,6 +50,8 @@ function ENT:Think() // Don't overwrite think (Overwrite FireShot() for custom s
 	end
 	self.Wire_Out["Can Fire"] = tonumber(self:CanFire())
 	self:UpdateWire()
+	self:NextThink(CurTime())
+	return true
 end
 
 function ENT:FireShot() // Overwrite this for missile launchers or things that have different shooting functions.
@@ -63,14 +67,6 @@ function ENT:FireShot() // Overwrite this for missile launchers or things that h
 	util.Effect(self.TraceEffect,ed)
 	if self.ShootSound then self:EmitSound(self.ShootSound) end
 	self:SetNextFire(CurTime()+self.FireDelay)
-end
-
-function ENT:SetNextFire(int)
-	self.NextFire = int
-end
-
-function ENT:GetNextFire()
-	return self.NextFire
 end
 
 function ENT:UpdateWire()
