@@ -123,6 +123,11 @@ end
 	Here are the functions that are non-essential to WDS but are still very useful.
 */
 
+function WDS.GetHealth(ent)
+	if !ent.DamageSystem then WDS.InitEntity(ent) end
+	return ent.DamageSystem.Health
+end
+
 function WDS.TakeExDamage(ent,dmg,att,inf)
 	if (ent:IsPlayer() and ent:Alive()) or ent:IsNPC() then
 		ent:TakeDamage(dmg,att,inf)
