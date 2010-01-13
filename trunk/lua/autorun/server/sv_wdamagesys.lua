@@ -52,9 +52,9 @@ WDS.Config.MaterialStrength =	{ // Contains the strength of all the known materi
 	Here are the most basic functions used in WDS.
 */
 
-function WDS.InitEntity(ent)
+function WDS.InitEntity(ent,mhealth)
 	ent.DamageSystem = ent.DamageSystem or {}
-	ent.DamageSystem.MaxHealth	= math.Clamp(WDS.CalculateMaxHealth(ent),1,WDS.Config.MaxHealth)
+	ent.DamageSystem.MaxHealth	= mhealth or math.Clamp(WDS.CalculateMaxHealth(ent),1,WDS.Config.MaxHealth)
 	ent.DamageSystem.Health		= ent.DamageSystem.MaxHealth
 	ent.DamageSystem.Dead		= true
 end
@@ -154,28 +154,29 @@ function WDS.AttackTrace(st,en,fl,dmg,rad,att,inf)
 	return tr
 end
 
-function WDS.Explosion(pos,rad,dmg,fl,att,inf,trc)
-	fl = fl or {}
-	for _,v in pairs(ents.FindInSphere(pos,rad)) do
-		if !table.HasValue(fl,v) then
-			local t
-			if trc then
-				t = WDS.TraceLine(pos,v:NearestPoint(pos),(fl or {}))
-			end
-			local dam = dmg-math.Round((dmg/100)*(v:NearestPoint(pos):Distance(pos)/rad)*100)
-			//print(v,t and t.Entity or nil, dam)
-			if dam <= 0 then dam = 1 end
-			if v and v:IsValid() then
-				local Val = false
-				if trc then
-					Val = t.Entity == v
-				else
-					Val = true
-				end
-				if Val then WDS.TakeExDamage(v,dam,att,inf) end
+function WDS.Explosion(pos,rad,dmg,fl,att,inf)
+	local DmgInfo = DamageInfo()
+	DmgInfo:SetDamageType(DMG_BLAST)
+	DmgInfo:SetDamagePosition(pos)
+	DmgInfo:SetMaxDamage(dmg+25)
+	DmgInfo:SetDamage(dmg)
+	DmgInfo:SetAttacker(att)
+	DmgInfo:SetInflictor(inf)
+	for k,v in ipairs(ents.GetAll()) do
+		if ValidEntity(v) and !table.HasValue(fl,v) then
+			local p = v:NearestPoint(pos)
+			local Dist = p:Distance(pos)
+			if Dist <= rad then
+				local dm = dmg*(1-Dist/rad)
+				local fc = (p-pos):Normalize()*512
+				DmgInfo:SetDamage(dm)
+				DmgInfo:SetDamageForce(fc)
+				v:TakeDamageInfo(DmgInfo)
+				print(tostring(v),dm,fc)
 			end
 		end
 	end
+
 end
 
 /*

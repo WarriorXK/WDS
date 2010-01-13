@@ -30,6 +30,9 @@ function ENT:Initialize()
 	local ed = EffectData()
 		ed:SetEntity(self)
 	util.Effect(self.TrailEffect,ed)
+	if self.SecondInit then
+		self:SecondInit()
+	end
 end
 
 AccessorFunc(ENT,"Velocity","Speed",FORCE_NUMBER)
