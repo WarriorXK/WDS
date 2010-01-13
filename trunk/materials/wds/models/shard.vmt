@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	"$basetexture"			"models/shard.vtf"
+	"$surfaceprop"			"tile"
+	"$halflambert"			"1"
+ 	"$phongboost"			"2"
+ 	"$phongfresnelranges"	"[.5 .8 1]"
+	"$alphatest"			"1"
+}
