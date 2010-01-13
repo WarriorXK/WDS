@@ -9,3 +9,5 @@ device08.mdl - Minelayer
 device09.mdl - Plasma Box
 device10.mdl - Railgun
 device11.mdl - Shard Cannon
+
+ Can you highten models/wds/device05.mdl's center so it is in the middle of the barrel?
