@@ -1,0 +1,26 @@
+
+SWEP.Author					= "kevkev/Warrior xXx"
+SWEP.Contact				= ""
+SWEP.Purpose				= "Placing anti personel mines."
+SWEP.Instructions			= "Left click on the ground to place an AP mine"
+SWEP.Spawnable				= true
+SWEP.AdminSpawnable			= true
+SWEP.ViewModel				= "models/weapons/v_Grenade.mdl"
+SWEP.WorldModel				= "models/weapons/w_Grenade.mdl"
+SWEP.Weight					= 5
+SWEP.AutoSwitchTo			= false
+SWEP.AutoSwitchFrom			= false
+SWEP.PrintName				= "Mines"			
+SWEP.Slot					= 4
+SWEP.SlotPos				= 6
+SWEP.DrawAmmo				= false
+SWEP.DrawCrosshair			= true
+SWEP.Category				= "WDS"
+SWEP.Primary.ClipSize		= -1
+SWEP.Primary.DefaultClip	= -1
+SWEP.Primary.Automatic		= false
+SWEP.Primary.Ammo			= "none"
+SWEP.Secondary.ClipSize		= -1
+SWEP.Secondary.DefaultClip	= -1
+SWEP.Secondary.Automatic	= false
+SWEP.Secondary.Ammo			= "none"

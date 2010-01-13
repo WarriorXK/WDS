@@ -172,7 +172,7 @@ function WDS.Explosion(pos,rad,dmg,fl,att,inf)
 				DmgInfo:SetDamage(dm)
 				DmgInfo:SetDamageForce(fc)
 				v:TakeDamageInfo(DmgInfo)
-				print(tostring(v),dm,fc)
+				//print(tostring(v),dm,fc)
 			end
 		end
 	end

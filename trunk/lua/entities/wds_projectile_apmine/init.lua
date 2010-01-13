@@ -33,7 +33,6 @@ function ENT:Think()
 			local Distance = v:NearestPoint(self:GetPos()):Distance(self:GetPos())
 			local Velocity = v:GetVelocity():Length()
 			if Velocity >= 55 or Velocity <= -55 then
-				print(v)
 				self.dt.Warning = true
 				if Distance <= 70 then
 					self:Explode()
@@ -53,7 +52,6 @@ function ENT:Use(ent)
 end
 
 function ENT:Explode()
-	print("Explode "..CurTime())
 	self.Uses = self.Uses+1
 	self.dt.Warning = false
 	self.dt.NextExplode = CurTime()+10
