@@ -61,7 +61,7 @@ function ENT:Shoot()
 	ent.WDSE = self
 	ent:SetDamage(self.Damage*self.Charge)
 	ent:SetRadius(self.ExplodeRadius+(self.Charge*2))
-	ent:SetSpeed(1000+(math.Clamp((self.Charge/2)*1000),2000,6000))
+	ent:SetSpeed(math.Clamp((self.Charge*500)+1000,2000,6000))
 	ent:Spawn()
 	ent:Activate()
 	if self.ShootSound then self:EmitSound(self.ShootSound) end
