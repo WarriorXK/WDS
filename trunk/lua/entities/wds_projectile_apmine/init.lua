@@ -22,6 +22,7 @@ function ENT:SecondInit()
 	self.dt.NextExplode = CurTime()+self.ArmTime
 	self.dt.Online = true
 	self:SetUseType(SIMPLE_USE)
+	self:SetMoveType(MOVETYPE_NONE)
 end
 
 function ENT:PhysicsCollide(data,physobj) end
