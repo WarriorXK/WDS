@@ -2,7 +2,7 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-ENT.ShootDirection	= Vector(0,0,1)
+ENT.ShootDirection	= Vector(1,0,0)
 ENT.ExplodeRadius	= 50
 ENT.TraceEffect		= ""
 ENT.ShootEffect		= "wds_weapon_tankcannon_shot"
@@ -11,7 +11,7 @@ ENT.ChargeSound		= ""
 ENT.ShootSound		= ""
 ENT.FireDelay		= 5
 ENT.Damage			= 150
-ENT.Model			= "models/props_c17/canister01a.mdl"
+ENT.Model			= "models/wds/device02.mdl"
 ENT.Class			= "wds_weapon_tankcannon"
 
 function ENT:SpawnFunction(p,t)
@@ -34,7 +34,7 @@ function ENT:FireShot()
 	ent.WDSE = self
 	ent:SetDamage(self.Damage)
 	ent:SetRadius(self.ExplodeRadius)
-	ent:SetSpeed(2000)
+	ent:SetSpeed(3000)
 	ent:Spawn()
 	ent:Activate()
 	if self.ShootSound then self:EmitSound(self.ShootSound) end

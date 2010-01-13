@@ -2,17 +2,17 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-ENT.ShootDirection	= Vector(0,0,1)
+ENT.ShootDirection	= Vector(1,0,0)
 ENT.ExplodeRadius	= 10
 ENT.ChargeEffect	= "wds_weapon_plasmapulse_charge"
 ENT.TraceEffect		= ""
-ENT.ShootOffset		= 40
+ENT.ShootOffset		= 42
 ENT.ChargeSound		= "wds/weapons/plasmapulse/powerup.wav"
 ENT.ShootSound		= "wds/weapons/plasmapulse/shoot.wav"
 ENT.ChargeTime		= 2
 ENT.FireDelay		= 5
 ENT.Damage			= 150
-ENT.Model			= "models/props_c17/canister01a.mdl"
+ENT.Model			= "models/wds/device05.mdl"
 ENT.Class			= "wds_weapon_plasmapulse"
 
 function ENT:SpawnFunction(p,t)

@@ -2,16 +2,16 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-ENT.ShootDirection	= Vector(0,0,1)
+ENT.ShootDirection	= Vector(1,0,0)
 ENT.ExplodeRadius	= 10
 ENT.BurstAmount		= 3
 ENT.TraceEffect		= "wds_weapon_laserburst_trace"
-ENT.ShootOffset		= 10
+ENT.ShootOffset		= 44
 ENT.BurstDelay		= 0.1
 ENT.ShootSound		= "wds/weapons/laserburst/shoot.wav"
 ENT.FireDelay		= 1
 ENT.Damage			= 12
-ENT.Model			= "models/props_c17/canister01a.mdl"
+ENT.Model			= "models/wds/device10.mdl"
 ENT.Class			= "wds_weapon_laserburst"
 
 function ENT:SpawnFunction(p,t)

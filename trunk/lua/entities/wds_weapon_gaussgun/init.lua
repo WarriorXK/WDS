@@ -2,18 +2,18 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-ENT.ShootDirection	= Vector(0,0,1)
+ENT.ShootDirection	= Vector(1,0,0)
 ENT.ExplodeRadius	= 10
 ENT.ChargeEffect	= "wds_weapon_gaussgun_charge"
 ENT.TraceEffect		= ""
-ENT.ShootOffset		= 40
+ENT.ShootOffset		= 34
 ENT.ChargeSound		= "weapons/gauss/chargeloop.wav"
 ENT.LastCharge		= 0
 ENT.ShootSound		= "weapons/gauss/fire1.wav"
 ENT.FireDelay		= 5
 ENT.Damage			= 30
 ENT.Charge			= 0
-ENT.Model			= "models/props_c17/canister01a.mdl"
+ENT.Model			= "models/wds/device07.mdl"
 ENT.Class			= "wds_weapon_gaussgun"
 
 function ENT:SpawnFunction(p,t)
