@@ -1,8 +1,8 @@
 "VertexLitGeneric"
 {
-  	"$baseTexture" "models/Metal1"
+  	"$baseTexture" "wds/models/Metal1"
 	"$surfaceprop"			"metal"
-	"$bumpmap"				"models/metal_normal"
+	"$bumpmap"				"wds/models/metal_normal"
 	"$envmap" "env_cubemap"
 	"$basealphaenvmapmask" 1
 	"$phong"				"1"

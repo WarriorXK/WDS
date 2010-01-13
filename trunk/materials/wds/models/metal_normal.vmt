@@ -1,4 +1,4 @@
 "LightmappedGeneric"
 {
-	"$basetexture" "models/metal_normal"
+	"$basetexture" "wds/models/metal_normal"
 }

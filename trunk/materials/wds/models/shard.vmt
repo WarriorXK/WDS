@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture"			"models/shard.vtf"
+	"$basetexture"			"wds/models/shard.vtf"
 	"$surfaceprop"			"tile"
 	"$halflambert"			"1"
  	"$phongboost"			"2"

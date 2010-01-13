@@ -1,0 +1,11 @@
+device01.mdl - Artillery
+device02.mdl - Tank Gun
+device03.mdl - Dark Energy Cannon/Plasma Pulse
+device04.mdl - Flak Cannon/Plasma Burst
+device05.mdl - Flamethrower/Cluster Launcher
+device06.mdl - Gatling Gun
+device07.mdl - Beam Cannon
+device08.mdl - Minelayer
+device09.mdl - Plasma Box
+device10.mdl - Railgun
+device11.mdl - Shard Cannon
