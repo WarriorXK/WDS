@@ -26,7 +26,7 @@ function ENT:Explode(data)
 	else
 		local ed = EffectData()
 			ed:SetOrigin(data.HitPos)
-			ed:SetMagnitude(64)
+			ed:SetMagnitude(32)
 		util.Effect(self.SmokeEffect,ed)
 	end
 end

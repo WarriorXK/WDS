@@ -15,7 +15,7 @@ ENT.ShootEffect		= "wds_weapon_nebelwerfer_shot"
 ENT.ShootOffset		= 40
 ENT.ChargeSound		= ""
 ENT.ShootSound		= ""
-ENT.FireDelay		= 5
+ENT.FireDelay		= 10
 ENT.Damage			= 300
 ENT.Model			= "models/wds/device04.mdl"
 ENT.Class			= "wds_weapon_nebelwerfer"
@@ -31,9 +31,10 @@ function ENT:SpawnFunction(p,t)
 end
 
 function ENT:FireShot()
+	local Am = table.Count(self.ShootPosses)
 	for i=1,4 do
-		for _,v in pairs(self.ShootPosses) do
-			timer.Simple(i,self.Shoot,self,v,i)
+		for b=1,Am do
+			timer.Simple(i+(b/Am),self.Shoot,self,self.ShootPosses[b],i)
 		end
 	end
 	if self.ShootSound then self:EmitSound(self.ShootSound) end
@@ -45,7 +46,8 @@ function ENT:Shoot(pos,mode)
 	local ent = ents.Create("wds_projectile_nebel")
 	ent:SetPos(self:LocalToWorld(pos))
 	local ang = self:LocalToWorldAngles(self.ShootDirection:Angle())
-	ang:RotateAroundAxis(ang:Right(),-math.random(88,92))
+	ang:RotateAroundAxis(ang:Right(),-math.random(85,95))
+	ang:RotateAroundAxis(ang:Forward(),math.random(-5,5))
 	ent:SetAngles(ang)
 	ent.WDSO = self.WDSO or self
 	ent.WDSE = self
