@@ -1,6 +1,6 @@
 ENT.Type			= "anim"
 ENT.Base			= "wds_weapon_base"
-ENT.PrintName		= "WDS Cluster Missle"
+ENT.PrintName		= "WDS Nebel Werfer"
 ENT.WireDebugName	= ENT.PrintName
 ENT.Author			= "kevkev/Warrior xXx"
 ENT.Contact			= ""

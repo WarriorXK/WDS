@@ -1,0 +1,62 @@
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
+include('shared.lua')
+
+ENT.ShootDirection	= Vector(1,0,0)
+ENT.ShootPosses =	{
+						Vector(10,0,4.5),
+						Vector(10,4.5,0),
+						Vector(10,0,-4.5),
+						Vector(10,-4.5,0),
+					}
+ENT.ExplodeRadius	= 200
+ENT.TraceEffect		= ""
+ENT.ShootEffect		= "wds_weapon_nebelwerfer_shot"
+ENT.ShootOffset		= 40
+ENT.ChargeSound		= ""
+ENT.ShootSound		= ""
+ENT.FireDelay		= 5
+ENT.Damage			= 300
+ENT.Model			= "models/wds/device04.mdl"
+ENT.Class			= "wds_weapon_nebelwerfer"
+
+function ENT:SpawnFunction(p,t)
+	if !t.Hit then return end
+	local e = ents.Create(self.Class or "wds_weapon_base")
+	e:SetPos(t.HitPos+t.HitNormal*20)
+	e.WDSO = p
+	e:Spawn()
+	e:Activate()
+	return e
+end
+
+function ENT:FireShot()
+	for i=1,4 do
+		for _,v in pairs(self.ShootPosses) do
+			timer.Simple(i,self.Shoot,self,v,i)
+		end
+	end
+	if self.ShootSound then self:EmitSound(self.ShootSound) end
+	self:SetNextFire(CurTime()+self.FireDelay)
+end
+
+function ENT:Shoot(pos,mode)
+	if !self or !self:IsValid() then return end
+	local ent = ents.Create("wds_projectile_nebel")
+	ent:SetPos(self:LocalToWorld(pos))
+	local ang = self:LocalToWorldAngles(self.ShootDirection:Angle())
+	ang:RotateAroundAxis(ang:Right(),-math.random(88,92))
+	ent:SetAngles(ang)
+	ent.WDSO = self.WDSO or self
+	ent.WDSE = self
+	ent:SetDamage(self.Damage)
+	ent:SetRadius(self.ExplodeRadius)
+	ent:SetSpeed(math.random(1300,1600))
+	ent:SetMode(mode)
+	ent:Spawn()
+	ent:Activate()
+	local ed = EffectData()
+		ed:SetEntity(self)
+		ed:SetOrigin(pos)
+	util.Effect(self.ShootEffect,ed)
+end

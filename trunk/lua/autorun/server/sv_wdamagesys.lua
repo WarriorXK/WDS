@@ -56,7 +56,7 @@ function WDS.InitEntity(ent,mhealth)
 	ent.DamageSystem = ent.DamageSystem or {}
 	ent.DamageSystem.MaxHealth	= mhealth or math.Clamp(WDS.CalculateMaxHealth(ent),1,WDS.Config.MaxHealth)
 	ent.DamageSystem.Health		= ent.DamageSystem.MaxHealth
-	ent.DamageSystem.Dead		= true
+	ent.DamageSystem.Dead		= false
 end
 
 function WDS.CalculateMaxHealth(ent)
