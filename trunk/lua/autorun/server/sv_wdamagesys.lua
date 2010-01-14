@@ -172,6 +172,9 @@ function WDS.Explosion(pos,rad,dmg,fl,att,inf)
 				DmgInfo:SetDamage(dm)
 				DmgInfo:SetDamageForce(fc)
 				v:TakeDamageInfo(DmgInfo)
+				if !v:IsPlayer() and !v:IsNPC() then
+					WDS.TakeExDamage(v,dm,att,inf)
+				end
 				//print(tostring(v),dm,fc)
 			end
 		end

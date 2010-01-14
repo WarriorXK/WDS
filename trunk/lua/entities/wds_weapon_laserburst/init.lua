@@ -6,7 +6,7 @@ ENT.ShootDirection	= Vector(1,0,0)
 ENT.ExplodeRadius	= 10
 ENT.BurstAmount		= 3
 ENT.TraceEffect		= "wds_weapon_laserburst_trace"
-ENT.ShootOffset		= 44
+ENT.ShootOffset		= 38
 ENT.BurstDelay		= 0.1
 ENT.ShootSound		= "wds/weapons/laserburst/shoot.wav"
 ENT.FireDelay		= 1
@@ -27,19 +27,20 @@ end
 function ENT:FireShot()
 	local Time = 0
 	for i=1,self.BurstAmount do
-		timer.Simple(Time,self.Shoot,self)
+		timer.Simple(Time,self.Shoot,self,i)
 		Time = Time+self.BurstDelay
 	end
 	self:SetNextFire(CurTime()+self.FireDelay)
 	if self.ChargeSound then self:EmitSound(self.ChargeSound) end
 end
 
-function ENT:Shoot()
+function ENT:Shoot(num)
 	if !self or !self:IsValid() then return end
 	local Pos = self:LocalToWorld(self.ShootDirection*self.ShootOffset)
-	local tr = WDS.AttackTrace(Pos,self:LocalToWorld(self.ShootDirection*10000),{self},self.Damage,0,self.WDSO or self,self)
+	local tr = WDS.AttackTrace(Pos,self:LocalToWorld(self.ShootDirection*10000),{self},self.Damage*num,0,self.WDSO or self,self)
 	local ed = EffectData()
 		ed:SetOrigin(Pos)
+		ed:SetMagnitude(self.Damage*num)
 		ed:SetStart(tr.HitPos)
 	util.Effect(self.TraceEffect,ed)
 	if self.ShootSound then self:EmitSound(self.ShootSound) end
