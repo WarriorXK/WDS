@@ -8,7 +8,7 @@ SWEP.PlaceSound		= Sound("Metal.SawbladeStick")
 function SWEP:PrimaryAttack()
 	self.Owner.WDSMineTable = self.Owner.WDSMineTable or {}
 	local tr = WDS.EyeTrace(self.Owner)
-	if tr.Hit and tr.Entity:IsWorld() and self.Owner:EyePos():Distance(tr.HitPos) <= 90 and self.NextPlacement <= CurTime() and self:GetMineCount() <= 20 then
+	if tr.Hit and tr.Entity:IsWorld() and self.Owner:EyePos():Distance(tr.HitPos) <= 90 and self.NextPlacement <= CurTime() and self:GetMineCount() <= 20 and !tr.HitSky then
 		self.NextPlacement = CurTime()+1
 		self:EmitSound(self.PlaceSound)
 		local ed = EffectData()

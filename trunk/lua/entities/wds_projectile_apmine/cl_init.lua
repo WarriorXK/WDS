@@ -14,4 +14,4 @@ function ENT:Draw()
 		render.DrawSprite(self:GetPos()+(self:GetUp()*2),self.SpriteSize,self.SpriteSize,Col)
 	end
 end
-language.Add("wds_projectile_mine",ENT.PrintName)
+language.Add("wds_projectile_apmine",ENT.PrintName)
