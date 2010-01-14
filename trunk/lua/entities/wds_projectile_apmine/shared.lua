@@ -10,6 +10,8 @@ ENT.Category 		= "WDS"
 ENT.Spawnable		= false
 ENT.AdminSpawnable	= false
 
+ENT.NoPhysgunPickup	= true
+
 function ENT:SetupDataTables()
 	self:DTVar("Float",0,"NextExplode")
 	self:DTVar("Bool",0,"Warning")

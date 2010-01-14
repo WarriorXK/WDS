@@ -15,3 +15,7 @@ function WDS.TraceLine(st,en,fl)
 	end
 	return util.QuickTrace(st,en-st,fl)
 end
+
+hook.Add("PhysgunPickup","WDS.PhysgunPickup",function(ply,ent)
+	if ent.NoPhysgunPickup then return false end
+end)

@@ -9,3 +9,5 @@ ENT.Category 		= "WDS"
 
 ENT.Spawnable		= false
 ENT.AdminSpawnable	= false
+
+ENT.NoPhysgunPickup	= true

@@ -6,7 +6,7 @@ local Mat = Material("tripmine_laser")
 function ENT:Draw()
 	self:DrawModel()
 	local tr = WDS.TraceLine(self:GetPos(),self:GetPos()+(self:GetUp()*-150),{self})
-	self:SetRenderBoundsWS(self:GetPos()-self:GetUp()*self:BoundingRadius(),tr.HitPos)
+	self:SetRenderBoundsWS(self:GetPos()-self:GetUp()*-self:BoundingRadius(),tr.HitPos)
 end
 
 function ENT:DrawTranslucent()

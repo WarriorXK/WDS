@@ -209,3 +209,11 @@ timer.Create("WDS_FadingEntityCheck",0.05,0,function()
 		end
 	end
 end)
+
+hook.Add("CanTool","WDS.CanTool",function(ply,tr,toolmode)
+	if tr.Entity and tr.Entity:IsValid() and (tr.Entity:GetClass() == "wds_projectile_apmine" or tr.Entity:GetClass() == "wds_projectile_atmine") then
+		if toolmode != "remover" then return false end // Only the remover STool may be used.
+		if ply:IsAdmin() then return end // If he is an admin let him do.
+		if ply != tr.Entity.WDSO then return false end // Only the owner may remove his own mines.
+	end
+end)
