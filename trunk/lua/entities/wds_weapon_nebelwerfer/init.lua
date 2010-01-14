@@ -14,7 +14,7 @@ ENT.TraceEffect		= ""
 ENT.ShootEffect		= "wds_weapon_nebelwerfer_shot"
 ENT.ShootOffset		= 40
 ENT.ChargeSound		= ""
-ENT.ShootSound		= ""
+ENT.ShootSound		= "wds/weapons/nebelwerfer/fire.wav"
 ENT.FireDelay		= 30
 ENT.Damage			= 300
 ENT.Model			= "models/wds/device04.mdl"
@@ -37,7 +37,6 @@ function ENT:FireShot()
 			timer.Simple(i+(b/Am),self.Shoot,self,self.ShootPosses[b],i)
 		end
 	end
-	if self.ShootSound then self:EmitSound(self.ShootSound) end
 	self:SetNextFire(CurTime()+self.FireDelay)
 end
 
@@ -61,4 +60,5 @@ function ENT:Shoot(pos,mode)
 		ed:SetEntity(self)
 		ed:SetOrigin(pos)
 	util.Effect(self.ShootEffect,ed)
+	if self.ShootSound then self:EmitSound(self.ShootSound) end
 end

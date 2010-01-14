@@ -4,11 +4,11 @@ include('shared.lua')
 
 ENT.ShootDirection	= Vector(0,0,1)
 ENT.ExplodeRadius	= 0
-ENT.ReloadSound		= ""
+ENT.ReloadSound		= "wds/weapons/atmine/reload.wav"
 ENT.ShootOffset		= 1
-ENT.ChargeSound		= ""
+ENT.ChargeSound		= "wds/weapons/atmine/charge.wav"
 ENT.ReloadDelay		= 5
-ENT.ShootSound		= ""
+ENT.ShootSound		= "wds/weapons/atmine/fire.wav"
 ENT.FireDelay		= 2
 ENT.Ammo			= 5
 ENT.Model			= "models/wds/device08.mdl"
