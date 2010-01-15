@@ -53,27 +53,22 @@ WDS.Config.MaterialStrength =	{ // Contains the strength of all the known materi
 */
 
 function WDS.InitEntity(ent,mhealth)
-	print("WDS Init start")
-	local ass = math.Clamp(WDS.CalculateMaxHealth(ent),1,WDS.Config.MaxHealth)
 	ent.DamageSystem = ent.DamageSystem or {}
-	print("\t"..tostring(ent).." - "..tostring(mhealth).." - "..ass)
-	ent.DamageSystem.MaxHealth	= mhealth or ass
-	print("\tSet to "..ent.DamageSystem.MaxHealth)
+	ent.DamageSystem.MaxHealth	= mhealth or math.Clamp(WDS.CalculateMaxHealth(ent),1,WDS.Config.MaxHealth)
 	ent.DamageSystem.Health		= ent.DamageSystem.MaxHealth
 	ent.DamageSystem.Dead		= false
-	print("WDS Init end")
 end
 
 function WDS.CalculateMaxHealth(ent)
+	local Phys = ent:GetPhysicsObject()
 	local MatStrength = 1
-	local Mat = ent:GetPhysicsObject():GetMaterial()
+	local Mat = Phys:GetMaterial()
 	if WDS.Config.MaterialStrength[Mat] then
 		MatStrength = WDS.Config.MaterialStrength[Mat]
 	else
 		print("WDS New Material Found - "..tostring(Mat))
 	end
-	print(Mat,MatStrength,WDS.Config.MaterialStrength[Mat])
-	return math.Round(WDS.Config.ModelHealth[ent] or ent:GetPhysicsObject():GetMass()*MatStrength)
+	return math.Round(WDS.Config.ModelHealth[ent] or Phys:GetMass()*MatStrength)
 end
 
 function WDS.TakeDamage(ent,dmg)
@@ -128,6 +123,10 @@ function WDS.KillEnt(ent)
 	end
 	return
 end
+
+hook.Add("OnEntityCreated","WDS.OnEntityCreated",function(ent)
+	WDS.InitEntity(ent)
+end)
 
 /*
 	WDS User functions
