@@ -2,4 +2,12 @@
 {
 	"$basetexture" "models/metal2"
 	"$bumpmap"	"models/metal_normal"
+	"$envmap" "env_cubemap"
+	"$basealphaenvmapmask" 1
+	"$phong"				"1"
+	"$halflambert"			"1"
+ 	"$phongexponent"		"60"
+ 	"$phongboost"			"2"
+ 	"$phongfresnelranges"	"[.5 .8 1]"
+	"$alphatest"			"1"
 }
