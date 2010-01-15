@@ -1,6 +1,6 @@
 ENT.Type			= "anim"
 ENT.Base			= "wds_weapon_base"
-ENT.PrintName		= "WDS AT Mine Placer"
+ENT.PrintName		= "AT Mine Placer"
 ENT.WireDebugName	= ENT.PrintName
 ENT.Author			= "kevkev/Warrior xXx"
 ENT.Contact			= ""

@@ -1,6 +1,6 @@
 ENT.Type			= "anim"
-ENT.Base			= "wds_weapon_base"
-ENT.PrintName		= "Gauss Gun"
+ENT.Base			= "base_entity"
+ENT.PrintName		= "Health Meter"
 ENT.WireDebugName	= ENT.PrintName
 ENT.Author			= "kevkev/Warrior xXx"
 ENT.Contact			= ""

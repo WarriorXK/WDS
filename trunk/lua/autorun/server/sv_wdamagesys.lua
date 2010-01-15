@@ -53,15 +53,27 @@ WDS.Config.MaterialStrength =	{ // Contains the strength of all the known materi
 */
 
 function WDS.InitEntity(ent,mhealth)
+	print("WDS Init start")
+	local ass = math.Clamp(WDS.CalculateMaxHealth(ent),1,WDS.Config.MaxHealth)
 	ent.DamageSystem = ent.DamageSystem or {}
-	ent.DamageSystem.MaxHealth	= mhealth or math.Clamp(WDS.CalculateMaxHealth(ent),1,WDS.Config.MaxHealth)
+	print("\t"..tostring(ent).." - "..tostring(mhealth).." - "..ass)
+	ent.DamageSystem.MaxHealth	= mhealth or ass
+	print("\tSet to "..ent.DamageSystem.MaxHealth)
 	ent.DamageSystem.Health		= ent.DamageSystem.MaxHealth
 	ent.DamageSystem.Dead		= false
+	print("WDS Init end")
 end
 
 function WDS.CalculateMaxHealth(ent)
-	local Phys = ent:GetPhysicsObject()
-	return math.Round(WDS.Config.ModelHealth[ent] or math.Clamp(Phys:GetMass(),1,5000)*(WDS.Config.MaterialStrength[Phys:GetMaterial()] or 1))
+	local MatStrength = 1
+	local Mat = ent:GetPhysicsObject():GetMaterial()
+	if WDS.Config.MaterialStrength[Mat] then
+		MatStrength = WDS.Config.MaterialStrength[Mat]
+	else
+		print("WDS New Material Found - "..tostring(Mat))
+	end
+	print(Mat,MatStrength,WDS.Config.MaterialStrength[Mat])
+	return math.Round(WDS.Config.ModelHealth[ent] or ent:GetPhysicsObject():GetMass()*MatStrength)
 end
 
 function WDS.TakeDamage(ent,dmg)
@@ -75,7 +87,7 @@ function WDS.TakeDamage(ent,dmg)
 	end
 end
 
-function WDS.KillEnt(ent) -- Destroys an entity with a effect, Format : Entity, Returns if the entity is destroyed with an custom function.
+function WDS.KillEnt(ent)
 	if !ent.DamageSystem then WDS.InitEntity(ent) end
 	if ent.DamageSystem.Health >= 1 then ent.DamageSystem.Health = 0 end
 	ent.DamageSystem.Dead = true
@@ -123,9 +135,48 @@ end
 	Here are the functions that are non-essential to WDS but are still very useful.
 */
 
+function WDS.GetMaxHealth(ent)
+	local out = 0
+	if !ent or !ent:IsValid() or ent:IsWorld() then
+		out = 0
+	elseif ent:IsPlayer() or ent:IsNPC() then
+		out = ent:GetMaxHealth()
+	elseif ent:GetClass() == "shield" or ent:GetClass() == "shield_generator" then
+		out = 100
+	else
+		if !ent.DamageSystem then WDS.InitEntity(ent) end
+		if ent.DamageSystem.Dead then
+			out = 0
+		elseif ent.DamageSystem.Core and ent.DamageSystem.Core:IsValid() then
+			out = ent.DamageSystem.Core.DamageSystem.MaxHealth
+		else
+			out = ent.DamageSystem.MaxHealth
+		end
+	end
+	return out
+end
+
 function WDS.GetHealth(ent)
-	if !ent.DamageSystem then WDS.InitEntity(ent) end
-	return ent.DamageSystem.Health
+	local out = 0
+	if !ent or !ent:IsValid() or ent:IsWorld() then
+		out = 0
+	elseif ent:IsPlayer() or ent:IsNPC() then
+		out = ent:Health()
+	elseif ent:GetClass() == "shield" then
+		out = ent.Parent.Strength
+	elseif ent:GetClass() == "shield_generator" then
+		out = ent.Strength
+	else
+		if !ent.DamageSystem then WDS.InitEntity(ent) end
+		if ent.DamageSystem.Dead then
+			out = 0
+		elseif ent.DamageSystem.Core and ent.DamageSystem.Core:IsValid() then
+			out = ent.DamageSystem.Core.DamageSystem.Health
+		else
+			out = ent.DamageSystem.Health
+		end
+	end
+	return out
 end
 
 function WDS.TakeExDamage(ent,dmg,att,inf)
@@ -179,7 +230,6 @@ function WDS.Explosion(pos,rad,dmg,fl,att,inf)
 			end
 		end
 	end
-
 end
 
 /*

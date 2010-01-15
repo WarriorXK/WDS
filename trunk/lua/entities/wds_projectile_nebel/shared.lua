@@ -1,6 +1,6 @@
 ENT.Type			= "anim"
 ENT.Base			= "wds_projectile_base"
-ENT.PrintName		= "Cluster"
+ENT.PrintName		= "Nebel Shell"
 ENT.Author			= "kevkev/Warrior xXx"
 ENT.Contact			= ""
 ENT.Purpose			= ""

@@ -3,7 +3,7 @@ AddCSLuaFile("shared.lua")
 include('shared.lua')
 
 ENT.DisarmedSound	= Sound("WDS/weapons/apmine/deactivate.wav")
-ENT.ExplodeEffect	= "wds_projectile_mine_explosion"
+ENT.ExplodeEffect	= "wds_projectile_apmine_explosion"
 ENT.ExplodeSound	= Sound("WDS/weapons/apmine/explode.wav")
 ENT.TrailEffect		= ""
 ENT.ArmedSound		= Sound("WDS/weapons/apmine/activate.wav")
