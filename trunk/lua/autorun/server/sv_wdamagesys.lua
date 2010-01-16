@@ -124,7 +124,7 @@ function WDS.KillEnt(ent)
 	return
 end
 
-hook.Add("OnEntityCreated","WDS.OnEntityCreated",function(ent)
+hook.Add("PhysgunPickup","WDS.PhysgunPickup",function(ply,ent)
 	WDS.InitEntity(ent)
 end)
 
