@@ -2,25 +2,33 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-// Edit these variables on your own ent.
 ENT.ShootDirection	= Vector(0,0,1)
 ENT.ExplodeRadius	= 10
-ENT.TraceEffect		= "wds_weapon_base_trace"
+ENT.ChargeEffect	= ""
+ENT.ShootEffect		= "wds_weapon_base_shoot"
+ENT.ChargeSound		= ""
 ENT.ShootOffset		= 40
+ENT.ReloadDelay		= 4
+ENT.ReloadSound		= ""
 ENT.ShootSound		= ""
+ENT.Projectile		= ""
+ENT.ChargeTime		= 0
 ENT.FireDelay		= 1
+ENT.MaxAmmo			= 0
 ENT.Damage			= 40
 ENT.Model			= "models/props_c17/canister01a.mdl"
 ENT.Class			= "wds_weapon_base"
+ENT.Speed			= 0
 
-ENT._Wire_Out = {}
-ENT.Wire_Out = {}
-ENT.Wire_In = {}
+ENT._Wire_Out		= {}
+ENT.Wire_Out		= {}
+ENT.Wire_In			= {}
 
-ENT.NextFire = 0
+ENT.NextFire		= 0
+ENT.Ammo			= ENT.MaxAmmo or 0
 
 function ENT:Initialize()
-	self:SetModel(self.Model or"models/props_c17/canister01a.mdl")
+	self:SetModel(self.Model)
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
@@ -36,7 +44,7 @@ AccessorFunc(ENT,"NextFire","NextFire",FORCE_NUMBER)
 
 function ENT:SpawnFunction(p,t)
 	if !t.Hit then return end
-	local e = ents.Create(self.Class or "wds_weapon_base")
+	local e = ents.Create(self.Class)
 	e:SetPos(t.HitPos+t.HitNormal*20)
 	e.WDSO = p
 	e:Spawn()
@@ -44,7 +52,7 @@ function ENT:SpawnFunction(p,t)
 	return e
 end
 
-function ENT:Think() // Don't overwrite think (Overwrite FireShot() for custom shots).
+function ENT:Think()
 	if tobool(self.Wire_In["On"]) and self:CanFire() then
 		self:FireShot()
 	end
@@ -54,17 +62,61 @@ function ENT:Think() // Don't overwrite think (Overwrite FireShot() for custom s
 	return true
 end
 
-function ENT:FireShot() // Overwrite this for missile launchers or things that have different shooting functions.
-	local Pos = self:LocalToWorld(self.ShootDirection*self.ShootOffset)
-	local Rad = 0
-	if self.ExplodeHit and self.ExplodeRadius and self.ExplodeRadius > 0 then
-		Rad = self.ExplodeRadius
+function ENT:FireShot()
+	if self.MaxAmmo and self.MaxAmmo > 0 then
+		if self.Ammo < 0 then
+			self.Ammo = self.MaxAmmo
+			self:SetNextFire(CurTime()+self.ReloadDelay)
+			return
+		else
+			self.Ammo = self.Ammo-1
+		end
 	end
-	local tr = WDS.AttackTrace(Pos,self:LocalToWorld(self.ShootDirection*10000),{self},self.Damage,Rad,self.WDSO or self,self)
+	if self.ChargeTime and self.ChargeTime > 0 then
+		timer.Simple(self.ChargeTime,self.Shoot,self)
+	else
+		self:Shoot()
+	end
 	local ed = EffectData()
-		ed:SetOrigin(Pos)
-		ed:SetStart(tr.HitPos)
-	util.Effect(self.TraceEffect,ed)
+		ed:SetEntity(self)
+		ed:SetOrigin(self.ShootDirection*self.ShootOffset)
+		ed:SetScale(self.ChargeTime)
+	util.Effect(self.ChargeEffect,ed)
+	self:SetNextFire(CurTime()+self.FireDelay)
+	if self.ChargeSound then self:EmitSound(self.ChargeSound) end
+end
+
+function ENT:Shoot()
+	if self.Projectile and self.Projectile != "" and type(self.Projectile) == "string" then
+		local ent = ents.Create(self.Projectile)
+		ent:SetPos(self:LocalToWorld(self.ShootDirection*self.ShootOffset))
+		local ang = self:LocalToWorldAngles(self.ShootDirection:Angle())
+		ang:RotateAroundAxis(ang:Right(),-90)
+		ent:SetAngles(ang)
+		ent.WDSO = self.WDSO or self
+		ent.WDSE = self
+		ent:SetDamage(self.Damage)
+		ent:SetRadius(self.ExplodeRadius)
+		ent:SetSpeed(self.Speed)
+		ent:Spawn()
+		ent:Activate()
+		local ed = EffectData()
+			ed:SetEntity(self)
+			ed:SetOrigin(self.ShootDirection*self.ShootOffset)
+		util.Effect(self.ShootEffect,ed)
+	else
+		local Pos = self:LocalToWorld(self.ShootDirection*self.ShootOffset)
+		local Rad = 0
+		if self.ExplodeHit and self.ExplodeRadius and self.ExplodeRadius > 0 then
+			Rad = self.ExplodeRadius
+		end
+		local tr = WDS.AttackTrace(Pos,self:LocalToWorld(self.ShootDirection*10000),{self},self.Damage,Rad,self.WDSO or self,self)
+		local ed = EffectData()
+			ed:SetEntity(self)
+			ed:SetOrigin(Pos)
+			ed:SetStart(tr.HitPos)
+		util.Effect(self.ShootEffect,ed)
+	end
 	if self.ShootSound then self:EmitSound(self.ShootSound) end
 	self:SetNextFire(CurTime()+self.FireDelay)
 end
