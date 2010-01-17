@@ -1,9 +1,9 @@
-"LightmappedGeneric"
+"VertexLitGeneric"
 {
-	"$basetexture" "models/metal2"
+	"$basetexture" "wds/models/metal2"
 	"$bumpmap"	"models/metal_normal"
 	"$envmap" "env_cubemap"
-	"$basealphaenvmapmask" 1
+
 	"$phong"				"1"
 	"$halflambert"			"1"
  	"$phongexponent"		"60"
