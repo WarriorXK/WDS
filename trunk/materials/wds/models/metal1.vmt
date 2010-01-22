@@ -3,8 +3,10 @@
   	"$baseTexture" "wds/models/Metal1"
 	"$surfaceprop"			"metal"
 	"$bumpmap"				"wds/models/metal_normal"
-	"$envmap" "env_cubemap"
-	"$basealphaenvmapmask" 1
+	"$envmap" "Models/props_combine/combine_binocular01_mask"
+	"$envmaptint" "[1 1 1]"
+	"$envmapcontrast" "0.5"
+	"$normalmapalphaenvmapmask" "Models\Combine_Helicopter\helicopter_bomb01_mask.vtf"
 	"$phong"				"1"
 	"$halflambert"			"1"
  	"$phongexponent"		"60"
