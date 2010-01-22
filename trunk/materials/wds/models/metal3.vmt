@@ -2,7 +2,7 @@
 {
 	"$baseTexture" "wds/models/Metal3"
 	"$bumpmap"	"wds/models/metal_normal"
-	"$envmap" "Models/props_combine/combine_binocular01_mask"
+	"$envmap" "Models\props_combine\combine_light001a_mask.vtf"
 	"$envmaptint" "[1 1 1]"
 	"$envmapcontrast" "1"
 	"$normalmapalphaenvmapmask" "Models\props_trainstation\Trainstation_Clock_glass001_mask.vtf"
