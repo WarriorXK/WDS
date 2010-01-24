@@ -20,10 +20,6 @@ ENT.Model			= "models/props_c17/canister01a.mdl"
 ENT.Class			= "wds_weapon_base"
 ENT.Speed			= 0
 
-ENT._Wire_Out		= {}
-ENT.Wire_Out		= {}
-ENT.Wire_In			= {}
-
 ENT.NextFire		= 0
 ENT.Ammo			= ENT.MaxAmmo or 0
 
@@ -38,6 +34,12 @@ function ENT:Initialize()
 	end
 	self.Inputs = Wire_CreateInputs(self,{"On"})
 	self.Outputs = Wire_CreateOutputs(self,{"Can Fire"})
+	self._Wire_Out = {}
+	self.Wire_Out = {}
+	self.Wire_In = {}
+	if self.SecondInit then
+		self:SecondInit()
+	end
 end
 
 AccessorFunc(ENT,"NextFire","NextFire",FORCE_NUMBER)
