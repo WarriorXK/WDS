@@ -53,6 +53,7 @@ WDS.Config.MaterialStrength =	{ // Contains the strength of all the known materi
 */
 
 function WDS.InitEntity(ent,mhealth)
+	if ent:IsPlayer() or ent:IsNPC() then return end
 	ent.DamageSystem = ent.DamageSystem or {}
 	ent.DamageSystem.MaxHealth	= mhealth or math.Clamp(WDS.CalculateMaxHealth(ent),1,WDS.Config.MaxHealth)
 	ent.DamageSystem.Health		= ent.DamageSystem.MaxHealth
