@@ -37,7 +37,11 @@ WDS.Config.MaterialStrength =	{ // Contains the strength of all the known materi
 									rubber = 0.9,
 									rubbertire = 1.1,
 									solidmetal = 1.7,
+									slipperymeal = 1,
 									slipperyslime = 1,
+									tile = 0.8,
+									water = 1,
+									weapon = 1,
 									wood = 0.7,
 									wood_crate = 0.7,
 									wood_furniture = 0.7,
@@ -126,7 +130,9 @@ function WDS.KillEnt(ent)
 end
 
 hook.Add("PhysgunPickup","WDS.PhysgunPickup",function(ply,ent)
-	WDS.InitEntity(ent)
+	if !ent.DamageSystem then
+		WDS.InitEntity(ent)
+	end
 end)
 
 /*
