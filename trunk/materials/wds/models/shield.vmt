@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "wds/models/shield"
+	"$envmap" "env_cubemap"
+	"$bumpmap"				"wds\models/shield_normal"
+}
