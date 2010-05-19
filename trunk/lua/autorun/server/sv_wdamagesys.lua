@@ -11,6 +11,7 @@ WDS.Config.MaterialStrength =	{ // Contains the strength of all the known materi
 									combine_metal = 2.2,
 									combine_glass = 1.7,
 									cardboard = 0.6,
+									computer = 0.6,
 									concrete = 2.5,
 									concrete_block = 2.5,
 									chainlink = 1.5,
@@ -46,6 +47,7 @@ WDS.Config.MaterialStrength =	{ // Contains the strength of all the known materi
 									wood_crate = 0.7,
 									wood_furniture = 0.7,
 									wood_panel = 1.1,
+									wood_plank = 0.7,
 									wood_solid = 1.2,
 									zombieflesh = 1
 								}
@@ -71,7 +73,7 @@ function WDS.CalculateMaxHealth(ent)
 	if WDS.Config.MaterialStrength[Mat] then
 		MatStrength = WDS.Config.MaterialStrength[Mat]
 	else
-		print("WDS New Material Found - "..tostring(Mat))
+		print("WDS New Material Found - "..tostring(Mat).." - Model : "..tostring(ent.GetModel and ent:GetModel() or "-ERROR-"))
 	end
 	return math.Round(WDS.Config.ModelHealth[ent] or Phys:GetMass()*MatStrength)
 end

@@ -53,3 +53,10 @@ function ENT:Explode(data)
 		ed:SetMagnitude(self.Radius)
 	util.Effect(self.ExplodeEffect,ed)
 end
+
+function WDS_Projectile_NoDamage(ent,dmg)
+	if ent.Base == "wds_projectile_base" then
+		return false
+	end
+end
+hook.Add("WDS_EntityTakeDamage","WDS_Projectile_NoDamage",WDS_Projectile_NoDamage)
