@@ -6,6 +6,7 @@ WDS.Config = {}
 WDS.Config.MaxHealth = 10000
 WDS.Config.ModelHealth = {} // Contains preset health of specific models.
 WDS.Config.MaterialStrength =	{ // Contains the strength of all the known materials.
+									alienflesh = 0.9,
 									canister = 1.5,
 									carpet = 1,
 									combine_metal = 2.2,
@@ -20,28 +21,42 @@ WDS.Config.MaterialStrength =	{ // Contains the strength of all the known materi
 									flesh = 0.9,
 									floating_metal_barrel = 1,
 									glass = 0.7,
+									glassbottle = 0.5,
+									gm_ps_metaltire = 1.9,
+									gm_ps_soccerball = 0.6,
+									gm_ps_woodentire = 0.7,
+									gm_torpedo = 1,
 									gmod_ice = 1,
 									gmod_bouncy = 0.9,
-									ice = 1,
+									grenade = 1,
+									ice = 0.9,
+									item = 1,
 									metal = 2,
 									metal_barrel = 1,
 									metal_bouncy = 2,
+									metal_box = 2,
+									metalvehicle = 2,
 									metalpanel = 1.3,
 									metalvent = 0.6,
 									paper = 0.3,
 									paintcan = 0.9,
 									popcan = 0.5,
+									pottery = 0.6,
 									porcelain = 0.8,
 									plastic = 0.8,
 									plastic_barrel = 0.8,
+									plastic_box = 0.8,
 									player = 0.9,
+									roller = 1.6,
 									rubber = 0.9,
 									rubbertire = 1.1,
 									solidmetal = 1.7,
 									slipperymeal = 1,
+									slipperymetal = 2,
 									slipperyslime = 1,
 									tile = 0.8,
 									water = 1,
+									watermelon = 0.7,
 									weapon = 1,
 									wood = 0.7,
 									wood_crate = 0.7,
@@ -73,7 +88,11 @@ function WDS.CalculateMaxHealth(ent)
 	if WDS.Config.MaterialStrength[Mat] then
 		MatStrength = WDS.Config.MaterialStrength[Mat]
 	else
-		print("WDS New Material Found - "..tostring(Mat).." - Model : "..tostring(ent.GetModel and ent:GetModel() or "-ERROR-"))
+		local Str = tostring(Mat).." - Model : "..tostring(ent.GetModel and ent:GetModel() or "-ERROR-")
+		local fil = "wds_newmaterials.txt"
+		if !file.Exists(fil) then file.Write(fil,"") end
+		filex.Append(fil,Str.."\n")
+		print("WDS New Material Found - "..Str)
 	end
 	return math.Round(WDS.Config.ModelHealth[ent] or Phys:GetMass()*MatStrength)
 end
