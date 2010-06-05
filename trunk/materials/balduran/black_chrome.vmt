@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "balduran/black_chrome"
+	"$basetexture" "Balduran/black_chrome"
 	//"%compilepassbullets" 1
 	//"$translucent" 1
 	//"$nocull" 1	
@@ -14,5 +14,6 @@
 	//"$gamematerial"	"Y"
 	"$HalfLambert" 1
 }
+
 
 
