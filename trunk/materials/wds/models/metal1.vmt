@@ -2,7 +2,7 @@
 {
   	"$baseTexture" "wds/models/Metal1"
 	"$surfaceprop"			"metal"
-	"$bumpmap"				"wds/models/metal_normal"
+	"$bumpmap"				"wds/models/metal1_n"
 	"$envmap" "Models/props_combine/combine_binocular01_mask"
 	"$envmaptint" "[1 1 1]"
 	"$envmapcontrast" "0.5"
