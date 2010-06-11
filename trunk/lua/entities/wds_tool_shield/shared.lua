@@ -12,7 +12,15 @@ ENT.Spawnable		= true
 ENT.AdminSpawnable	= true
 
 function ENT:SetupDataTables()
-	self:DTVar("Int",0,"LastHit")
-	self:DTVar("Int",1,"Energy")
+	self:DTVar("Int",0,"Energy")
 	self:DTVar("Bool",0,"Online")
+	self:DTVar("Entity",0,"ShieldEntity")
+end
+
+function ENT:IsOnline()
+	return ValidEntity(self.dt.ShieldEntity)
+end
+
+function ENT:GetSize()
+	return 1024
 end
