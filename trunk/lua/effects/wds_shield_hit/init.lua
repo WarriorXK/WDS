@@ -1,19 +1,22 @@
 
 EFFECT.Material = Material("wds/effects/shieldhit")
+EFFECT.Min = 0.1
 
 function EFFECT:Init(data)
-	self.ShieldEntity = data:GetEntity()
+	self.Shield = data:GetEntity()
 	self.HitPos = data:GetOrigin()
-	self.Size = data:GetScale()
-	self.Normal = (self.ShieldEntity:GetPos()-self.HitPos):Normalize()
+	self.Normal = data:GetNormal()
+	self.Size = data:GetScale()*50
 	self.Alpha = 255
 	self.Entity:SetPos(self.HitPos)
+	self.Entity:SetParent(self.Shield)
 end 
 
 function EFFECT:Think()
-	if !self.ShieldEntity or !self.ShieldEntity:IsValid() then return false end
+	if !ValidEntity(self.Shield) then return false end
 	self.Alpha = self.Alpha-0.01
-	self.Size = self.Size * 0.99
+	self.Min = self.Min+0.003
+	self.Size = self.Size*(0.99-self.Min)
 	return self.Alpha >= 0
 end 
 

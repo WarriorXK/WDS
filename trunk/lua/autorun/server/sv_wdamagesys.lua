@@ -107,10 +107,10 @@ function WDS.CalculateMaxHealth(ent)
 	return math.Round(WDS.Config.ModelHealth[ent] or Phys:GetMass()*MatStrength)
 end
 
-function WDS.TakeDamage(ent,dmg)
+function WDS.TakeDamage(ent,dmg,pos)
 	if ent:IsWorld() or ent:IsVehicle() or string.find(ent:GetClass(),"func_") == 1 or !ent:IsValid() or !ent:GetPhysicsObject():IsValid() then return end
 	if !ent.DamageSystem then WDS.InitEntity(ent) end
-	local Call = hook.Call("WDS_EntityTakeDamage",GAMEMODE,ent,dmg)
+	local Call = hook.Call("WDS_EntityTakeDamage",GAMEMODE,ent,dmg,pos)
 	if Call != nil and !tobool(a) then return end
 	ent.DamageSystem.Health = ent.DamageSystem.Health-dmg
 	if ent.DamageSystem.Health <= 0 then
@@ -216,13 +216,13 @@ function WDS.GetHealth(ent)
 	return out
 end
 
-function WDS.TakeExDamage(ent,dmg,att,inf)
+function WDS.TakeExDamage(ent,dmg,att,inf,pos)
 	if (ent:IsPlayer() and ent:Alive()) or ent:IsNPC() then
 		ent:TakeDamage(dmg,att,inf)
 	elseif ent:GetClass() == "shield" then
 		ent:Hit(inf,(ent:GetPos()-inf:GetPos()):Angle():GetNormal(),inf:GetPos(),dmg)
 	else
-		WDS.TakeDamage(ent,dmg)
+		WDS.TakeDamage(ent,dmg,pos)
 	end
 end
 

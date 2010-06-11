@@ -48,6 +48,7 @@ function ENT:TurnOn()
 	self.dt.ShieldEntity:SetParent(self)
 	self.dt.ShieldEntity:Spawn()
 	self.dt.ShieldEntity:Activate()
+	constraint.Weld(self,self.dt.ShieldEntity,0,0,0,false)
 end
 
 function ENT:TurnOff()
