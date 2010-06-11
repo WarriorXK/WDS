@@ -3,7 +3,9 @@ AddCSLuaFile("shared.lua")
 include('shared.lua')
 
 ENT.ShouldBeOnline = false
+ENT.NextConversion = 0
 
+ENT.MaxStrength = 1000
 ENT.MaxDamage = 50
 
 function ENT:Initialize()
@@ -30,14 +32,24 @@ function ENT:SpawnFunction(p,t)
 end
 
 function ENT:Think()
+	local CAmount
 	if self.ShouldBeOnline then
+		CAmount = math.Round(self.MaxStrength/100)
 		if self:IsOnline() then
 			self:DrainEnergy(math.Round(self:GetSize()/100))
-		else
+		elseif self:GetStrength() >= self.MaxStrength/10 then
 			self:TurnOn()
 		end
-	elseif self:IsOnline() then
-		self:TurnOff()
+	else
+		CAmount = math.Round(self.MaxStrength/50)
+		if self:IsOnline() then
+			self:TurnOff()
+		end
+	end
+	if self.NextConversion <= CurTime() and self:GetStrength() < self.MaxStrength and self:HasEnergy(CAmount*2) then
+		self:SetStrength(self:GetStrength()+CAmount)
+		self:DrainEnergy(CAmount*2)
+		self.NextConversion = CurTime()+1
 	end
 end
 
@@ -52,20 +64,37 @@ function ENT:TurnOn()
 end
 
 function ENT:TurnOff()
-	if ValidEntity(self.dt.ShieldEntity) then self.dt.ShieldEntity:Remove()	end
+	if ValidEntity(self:GetShieldEntity()) then self:GetShieldEntity():Remove()	end
 	self.dt.ShieldEntity = nil
+end
+
+function ENT:TakeShieldDamage(Dam,Pos)
+	self:SetStrength(self:GetStrength()-Dam)
+	if Pos then
+		local ed = EffectData()
+			ed:SetEntity(self)
+			ed:SetOrigin(Pos)
+			ed:SetNormal((self:GetPos()-Pos):Normalize())
+			ed:SetScale(1*(math.Clamp(Dam/20,1,5)))
+		util.Effect("wds_shield_hit",ed)
+	end
+end
+
+function ENT:SetStrength(amount)
+	self.dt.Strength = math.Clamp(amount,0,self.MaxStrength)
+	if self:GetStrength() <= 0 then self:TurnOff() end
 end
 
 function ENT:DrainEnergy(amount)
 	
 end
 
+function ENT:HasEnergy(amount)
+	return true
+end
+
 function ENT:TriggerInput(name,val)
 	if name == "On" then
-		if val == 1 then
-			self.ShouldBeOnline = true
-		else
-			self.ShouldBeOnline = false
-		end
+		self.ShouldBeOnline = tobool(val)
 	end
 end

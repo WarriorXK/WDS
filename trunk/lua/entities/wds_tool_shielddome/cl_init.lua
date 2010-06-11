@@ -18,5 +18,5 @@ end
 language.Add("wds_tool_shielddome",ENT.PrintName)
 
 function ENT:Think()
-	self.ClipHeight = math.Approach(self.ClipHeight,100,1)
+	self.ClipHeight = math.Approach(self.ClipHeight,100,4)
 end

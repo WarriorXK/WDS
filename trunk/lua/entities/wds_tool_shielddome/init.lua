@@ -30,15 +30,7 @@ function ENT:Think()
 end
 
 function ENT:TakeShieldDamage(Dam,Pos)
-	self.Generator:DrainEnergy(Dam)
-	if Pos then
-		local ed = EffectData()
-			ed:SetEntity(self)
-			ed:SetOrigin(Pos)
-			ed:SetNormal((self:GetPos()-Pos):Normalize())
-			ed:SetScale(1*(math.Clamp(Dam/20,1,5)))
-		util.Effect("wds_shield_hit",ed)
-	end
+	self.Generator:TakeShieldDamage(Dam,Pos)
 end
 
 function ENT:OnTakeDamage(dmginfo)

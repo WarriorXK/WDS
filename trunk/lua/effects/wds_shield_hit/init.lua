@@ -17,7 +17,7 @@ function EFFECT:Think()
 	self.Alpha = self.Alpha-0.01
 	self.Min = self.Min+0.003
 	self.Size = self.Size*(0.99-self.Min)
-	return self.Alpha >= 0
+	return self.Alpha >= 0 and self.Size >= 0
 end 
 
 function EFFECT:Render()
