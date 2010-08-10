@@ -9,6 +9,7 @@ WDS.Config.MaterialStrength =	{ // Contains the strength of all the known materi
 									alienflesh = 0.9,
 									antlion = 0.9,
 									boulder = 1.3,
+									brick = 1.2,
 									canister = 1.5,
 									carpet = 1,
 									combine_metal = 2.2,
