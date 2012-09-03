@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "wds/effects/pulse_laser"
+	"$vertexcolor"	"1"
+	"$vertexalpha"	"1"
+	"$nolod"		"1"
+}

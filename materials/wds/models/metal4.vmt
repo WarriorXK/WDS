@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+   "$baseTexture" "wds/models/Metal4"
+	"$bumpmap"				"wds/models/metal_normal"
+	//"$envmap" "Models/props_combine/combine_binocular01_mask"
+	"$envmaptint" "[1 1 1]"
+	"$envmapcontrast" "1.2"
+	//"$normalmapalphaenvmapmask" "Models\props_lab\crematorcase_jarmask.vtf"
+	//"$phong"				"1"
+	//"$halflambert"			"1"
+ 	//"$phongexponent"		"60"
+ 	//"$phongboost"			"2"
+ 	//"$phongfresnelranges"	"[.5 .8 1]"
+	//"$alphatest"			"1"
+}

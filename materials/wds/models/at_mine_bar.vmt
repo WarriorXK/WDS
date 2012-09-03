@@ -1,0 +1,14 @@
+"UnlitGeneric"
+{
+	"$basetexture" "wds/models/at_mine_bar"
+   "Proxies"
+   {
+      "AnimatedTexture"
+      {
+         "animatedtexturevar" "$basetexture"
+         "animatedtextureframenumvar" "$frame"
+         "animatedtextureframerate" "20"
+      }
+   }
+
+}

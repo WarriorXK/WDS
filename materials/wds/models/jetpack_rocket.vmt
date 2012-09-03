@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "wds/models/jetpack_rocket"
+	"$bumpmap" "wds/models/jetpack_rocket_n"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[1 1 1]"
+	"$envmapcontrast" "1.2"
+}
