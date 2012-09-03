@@ -74,6 +74,6 @@ function ENT:TriggerInput(name,val)
 	if name == "Fire" then
 		self.ShouldFire = tobool(val)
 	elseif name == "Mode" then
-		self.ShellMode = math.Clamp(tobool(val),1,2)
+		self.ShellMode = math.Clamp(math.floor(val),1,2)
 	end
 end
