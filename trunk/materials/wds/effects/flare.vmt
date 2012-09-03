@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture"	"wds/effects/flare"
-	"$additive"		"1"
-	"$vertexColor"	"1"
-	"$ignorez"		"0"
-}

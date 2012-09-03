@@ -1,3 +1,0 @@
-I noticed the generator gets bumped away if you fire at the shield without freezing the former
-
-Also i think the hp is a tad too low - i can easily take it down with the smg without even reloading (intended i suppose)
