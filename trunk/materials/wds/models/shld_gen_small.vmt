@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"wds/models/shld_gen_small"
+	"$normalmap"	"wds/models/shld_gen_small_n"
+
+
+	"$envmap" "Models/props_combine/combine_binocular01_mask"
+	"$envmaptint" "[1 1 1]"
+	"$envmapcontrast" ".9"
+	"$normalmapalphaenvmapmask" "wds/models/shld_gen_small_env"
+	"$phong"				"1"
+	"$halflambert"			"1"
+ 	"$phongexponent"		"100"
+ 	"$phongboost"			"2"
+ 	"$phongfresnelranges"	"[.5 .1 1]"
+	"$alphatest"			"1"
+}

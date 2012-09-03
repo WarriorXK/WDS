@@ -1,0 +1,43 @@
+"Out"
+{
+	"models/props_lab/blastdoor001c.mdl"
+	{
+		"maxhealth"	"500"
+		"armortype"	"AT"
+	}
+	"models/props_lab/blastdoor001a.mdl"
+	{
+		"maxhealth"	"250"
+		"armortype"	"AT"
+	}
+	"models/props_lab/blastdoor001b.mdl"
+	{
+		"maxhealth"	"250"
+		"armortype"	"AT"
+	}
+	"models/props_c17/concrete_barrier001a.mdl"
+	{
+		"maxhealth"	"200"
+		"armortype"	"AT"
+	}
+	"models/props_wasteland/cargo_container01.mdl"
+	{
+		"maxhealth"	"12000"
+		"armortype"	"AT"
+	}
+	"models/props_wasteland/cargo_container01b.mdl"
+	{
+		"maxhealth"	"10500"
+		"armortype"	"AT"
+	}
+	"models/props_wasteland/cargo_container01c.mdl"
+	{
+		"maxhealth"	"10000"
+		"armortype"	"AT"
+	}
+	"models/wds/1024shield.mdl"
+	{
+		"maxhealth" "10000"
+		"armortype"	"SH"
+	}
+}

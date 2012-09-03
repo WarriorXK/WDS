@@ -1,0 +1,4 @@
+"WDS2.DualLaserImpact"
+{
+	"decals/eye" 	"1"
+}

@@ -1,0 +1,15 @@
+"VertexLitGeneric"	
+{
+	"$baseTexture" "wds/models/Metal3"
+	"$bumpmap"	"wds/models/metal_normal"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[1 1 1]"
+	"$envmapcontrast" "1"
+	//"$normalmapalphaenvmapmask" "Models\props_trainstation\Trainstation_Clock_glass001_mask.vtf"
+	//"$phong"				"1"
+	//"$halflambert"			"1"
+ 	//"$phongexponent"		"60"
+ 	//"$phongboost"			"2"
+ 	//"$phongfresnelranges"	"[.5 .8 1]"
+	//"$alphatest"			"1"
+}

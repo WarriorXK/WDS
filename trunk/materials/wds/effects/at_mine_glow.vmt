@@ -1,0 +1,17 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"wds/effects/at_mine_glow"
+	"$vertexcolor"	"1"
+	"$vertexalpha"	"1"
+	"$nolod"		"1"
+   "Proxies"
+   {
+      "AnimatedTexture"
+      {
+         "animatedtexturevar" "$basetexture"
+         "animatedtextureframenumvar" "$frame"
+         "animatedtextureframerate" "100"
+      }
+   }
+
+}

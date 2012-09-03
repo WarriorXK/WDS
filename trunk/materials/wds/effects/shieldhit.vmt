@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"wds/effects/shieldhit"
+	"$vertexcolor"	"1"
+	"$vertexalpha"	"1"
+	"$nolod"		"1"
+}
