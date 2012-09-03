@@ -36,7 +36,7 @@ function ENT:Eject(ent)
 		phys:Wake()
 		phys:SetVelocityInstantaneous(self:GetUp()*200)
 	end
-	timer.Simple(5,self.Despawn,self)
+	timer.Simple(5, function() self:Despawn() end)
 end
 
 function ENT:Despawn()
