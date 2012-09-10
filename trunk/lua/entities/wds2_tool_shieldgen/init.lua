@@ -60,14 +60,14 @@ function ENT:Think()
 	if RD2Version != nil and !self.DisableEnergy then // RD2 stuff
 		local Enrg = RD_GetResourceAmount(self, "energy")
 		local Drain = math.Clamp(self.MaxEnergy - self:GetEnergy(), 0, math.min(self.EnergyDrain, Enrg))
-		if Enrg > Drain then
+		if Enrg >= Drain then
 			RD_ConsumeResource(self, "energy", Drain)
 			EnergyDrained = Drain
 		end
 	end
 	self:SetEnergy(self:GetEnergy() + EnergyDrained)
 	if self.Drained and self:GetEnergy() >= self.DrainedThreshold then self.Drained = false end
-	self:NextThink(CurTime()+0.1)
+	self:NextThink(CurTime())
 	return true
 end
 
