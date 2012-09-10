@@ -181,7 +181,7 @@ function WDS2_Tankmine_Pickup(ply, ent)
 	if ent:GetClass() == "wds2_tool_tankmine" and ply:IsPlayer() then
 	
 		ent.IsBeingHeld = true
-		self:Arm(ply)
+		ent:Arm(ply)
 		
 	end
 	
