@@ -85,42 +85,62 @@ function WDS2.CalcArmor(ent)
 	return 1 // Todo : Maybe a formula of sorts?
 end
 
-function WDS2.DealDirectDamage(ent,dmg,typ)
+function WDS2.DealDirectDamage(ent, dmg, typ)
 	if !WDS2.CanDamageEntity(ent) then return end
 
 	if typ != "AT" and typ != "AP" and typ != "SH" then typ = "AT" end
 
 	local HookCall = hook.Call("WDS2_EntityShouldTakeDamage", GAMEMODE, ent, dmg, typ)
-	if HookCall != nil then return end
+	if HookCall != nil then if !tobool(HookCall) then return end end
+	
+	WDS2.Debug.Print("Damaging \""..tostring(ent).."\" with "..tostring(dmg).." "..tostring(typ).." damage against "..tostring(WDS2.GetArmorType(ent)))
+
+	ent.WDS2.Health = ent.WDS2.Health - (dmg * WDS2.CalculateDamageMul(typ, ent))
+	
+	WDS2.CheckProp(ent)
+end
+
+function WDS2.CalculateDamageMul(typ, ent)
 	
 	local ArmTyp = WDS2.GetArmorType(ent)
-	
-	WDS2.Debug.Print("Damaging \""..tostring(ent).."\" with "..tostring(dmg).." "..tostring(typ).." damage against "..tostring(ArmTyp))
-	
+
 	if typ == "AT" then
-		if ArmTyp == "AT" then
-			ent.WDS2.Health = ent.WDS2.Health - (dmg)
+	
+		if ArmTyp == "AP" then
+			return 1
 		elseif ArmTyp == "SH" then
-			ent.WDS2.Health = ent.WDS2.Health - (dmg*0.5)
+			return 0.5
 		elseif ArmTyp == "AT" then
-			ent.WDS2.Health = ent.WDS2.Health - (dmg*1.2)
+			return 1
 		end
+		
 	elseif typ == "AP" then
+	
 		if ArmTyp == "AP" then
-			ent.WDS2.Health = ent.WDS2.Health - (dmg*2)
+			return 2
 		elseif ArmTyp == "SH" then
-			ent.WDS2.Health = ent.WDS2.Health - (dmg*0.3)
+			return 0.7
 		elseif ArmTyp == "AT" then
-			ent.WDS2.Health = ent.WDS2.Health - (dmg*0.2)
+			return 0.5
 		end
+		
 	elseif typ == "SH" then
+	
 		if ArmTyp == "AP" then
-			ent.WDS2.Health = ent.WDS2.Health - (dmg*0.1)
+			return 0.1
 		elseif ArmTyp == "SH" then
-			ent.WDS2.Health = ent.WDS2.Health - (dmg*1.2)
+			return 1.2
+		elseif ArmTyp == "AT" then
+			return 0
 		end
+		
 	end
 	
+	return 1
+	
+end
+
+function WDS2.CheckProp(ent)
 	if ent.WDS2.Health <= 0 then
 		WDS2.Debug.Print("Ent " .. tostring(ent) .. " died")
 		if hook.Call("WDS2_EntityDied",GAMEMODE,e,d) != false then
@@ -131,7 +151,7 @@ end
 
 function WDS2.CanDamageEntity(e)
 	local HookCall = hook.Call("WDS2_EntityCanTakeDamage",GAMEMODE,e)
-	if HookCall != nil then return !tobool(HookCall) end
+	if HookCall != nil then return tobool(HookCall) end
 	
 	local Class = e:GetClass()
 	if table.HasValue(WDS2.ProtectedClasses,Class) then return false end
