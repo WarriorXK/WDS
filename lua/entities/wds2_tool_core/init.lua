@@ -2,7 +2,6 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-ENT.CorePower = 100
 ENT.MaxPower = 1000
 
 function ENT:Initialize()
@@ -14,6 +13,7 @@ function ENT:Initialize()
 	if phys:IsValid() then
 		phys:Wake()
 	end
+	self.dt.CorePower = 100
 	self.dt.NextCoreCharge = 0
 	self.Outputs = Wire_CreateOutputs(self,{"Core Power"})
 end
@@ -42,21 +42,21 @@ end
 
 function ENT:Think()
 	if self.dt.NextCoreCharge < CurTime() then
-		self.CorePower = math.min(self.CorePower + 1, self.MaxPower)
+		self.dt.CorePower = math.min(self.dt.CorePower + 1, self.MaxPower)
 	end
 	
-	Wire_TriggerOutput(self, "Core Power", self.CorePower)
+	Wire_TriggerOutput(self, "Core Power", self.dt.CorePower)
 	
 	self:NextThink(CurTime())
 	return true
 end
 
 function ENT:TakeDirectCoreDamage(damage)
-	self.CorePower = self.CorePower - damage
+	self.dt.CorePower = self.dt.CorePower - damage
 	
 	self.dt.NextCoreCharge = CurTime() + 2
 	
-	if self.CorePower <= 0 then
+	if self.dt.CorePower <= 0 then
 		self:Death()
 		return
 	end
