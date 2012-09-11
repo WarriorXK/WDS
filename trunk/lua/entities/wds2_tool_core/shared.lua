@@ -14,4 +14,5 @@ ENT.AdminSpawnable	= true
 
 function ENT:SetupDataTables()
 	self:DTVar("Float", 0, "NextCoreCharge")
+	self:DTVar("Int", 0, "CorePower")
 end
