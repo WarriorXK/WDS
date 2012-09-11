@@ -8,7 +8,8 @@ ENT.ShouldFire = false
 ENT.Charging = false
 ENT.Charge = 0
 
-ENT.MaxCharge = 3
+ENT.MaxCharge = 6
+ENT.MinCharge = 3
 ENT.CurPitch = 0
 
 function ENT:Initialize()
@@ -47,7 +48,7 @@ function ENT:Think()
 		if !self.ChargeSound:IsPlaying() then self.ChargeSound:Play() end
 		self.Charge = math.Clamp(self.Charge + 0.1,0,self.MaxCharge)
 		self.NextDischarge = CurTime() + 2
-		self.CurPitch = 40+(self.Charge*3.3)
+		self.CurPitch = 40+(self.Charge*5)
 	else
 		if self.ChargeSound:IsPlaying() and self.CurPitch <= 10 then self.ChargeSound:Stop() end
 		self.CurPitch = math.Approach(self.CurPitch,0,0.5)
@@ -56,9 +57,9 @@ function ENT:Think()
 		end
 	end
 	if self.ChargeSound:IsPlaying() then self.ChargeSound:ChangePitch(self.CurPitch) end
-	if self.Charge >= self.MaxCharge then
+	if self.Charge >= self.MinCharge then
 		if self.ShouldFire then
-			self:FireShot()
+			self:FireShot(self.Charge)
 		end
 		Wire_TriggerOutput(self,"Can Fire",1)
 	else
@@ -69,12 +70,13 @@ function ENT:Think()
 	return true
 end
 
-function ENT:FireShot()
+function ENT:FireShot(Charge)
 	local ent = ents.Create("wds2_projectile_plasmacharger")
 	ent:SetAngles(self:GetAngles())
 	ent:SetPos(self:GetPos()+(self:GetForward()*40))
 	ent.Cannon = self
 	ent.WDSO = self.WDSO
+	ent:SetCharge(Charge)
 	if CPPI then ent:CPPISetOwner(self.WDSO) end // Prop protection API support, prevents "You now own this prop" messages
 	ent:Spawn()
 	ent:Activate()
@@ -89,6 +91,8 @@ end
 function ENT:OnRemove()
 	if self.ChargeSound:IsPlaying() then self.ChargeSound:Stop() end
 end
+
+function ENT:UpdateTransmitState() return TRANSMIT_ALWAYS end
 
 function ENT:TriggerInput(name,val)
 	if name == "Fire" then

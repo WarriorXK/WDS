@@ -100,7 +100,7 @@ end
 function ENT:FireShot()
 
 	local pos = self:LocalToWorld(self.ShootPosses[self.CurrentBarrel])
-	local tr = WDS2.TraceLine(pos,self:GetForward()*50000,{self})
+	local tr = WDS2.TraceLine(pos, pos + (self:GetForward() * 50000), {self})
 	
 	if ValidEntity(tr.Entity) and !tr.Entity:IsWorld() then
 	

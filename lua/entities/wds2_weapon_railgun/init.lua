@@ -11,6 +11,9 @@ local ExplosionSound = Sound("wds2/weapons/railgun/explosion.wav")
 local ShootSound = Sound("wds2/weapons/railgun/fire.wav")
 local AmmoSound = Sound("wds2/weapons/railgun/ammo.wav")
 
+ENT.MaxPenetrations = 5
+
+ENT.PenetrationShot = false
 ENT.ShouldFire = false
 ENT.HasCharge = false
 ENT.LastShot = 0
@@ -24,7 +27,7 @@ function ENT:Initialize()
 	if phys:IsValid() then
 		phys:Wake()
 	end
-	self.Inputs = Wire_CreateInputs(self,{"Fire"})
+	self.Inputs = Wire_CreateInputs(self,{"Fire", "Penetrate"})
 	self.Outputs = Wire_CreateOutputs(self,{"Can Fire","Charge"})
 end
 
@@ -71,10 +74,65 @@ function ENT:FireShot()
 
 	local tr = WDS2.TraceLine(Pos,Pos+(self:GetForward()*50000),{self})
 
-	if ValidEntity(tr.Entity) then
-		WDS2.DealDirectDamage(tr.Entity,500,"AT")
+	if self.PenetrationShot then
+		
+		if ValidEntity(tr.Entity) then
+			WDS2.DealDirectDamage(tr.Entity, 500, "AT")
+			
+			local valid = true
+			local Penetrations = 1
+			while (valid) do
+			
+				tr = WDS2.TraceLine(tr.HitPos, tr.HitPos + (self:GetForward() * 50000), {tr.Entity})
+				WDS2.DealDirectDamage(tr.Entity, 500 - (100 * Penetrations), "AT")
+				
+				Penetrations = Penetrations + 1
+				
+				if tr.HitWorld or Penetrations >= self.MaxPenetrations then valid = false end
+			end
+			
+		end
+		
+	else
+	
+		if ValidEntity(tr.Entity) then
+			WDS2.DealDirectDamage(tr.Entity,500,"AT")
+		end
+		WDS2.CreateExplosion(tr.HitPos, 70, 300, self)
+
+		local ed = EffectData()
+			ed:SetStart(Pos)
+			ed:SetNormal(tr.HitNormal)
+		util.Effect("wds2_railgun_explosion",ed,true,true)
+		
+		local DmgInfo = DamageInfo()
+		DmgInfo:SetAttacker(self.WDSO)
+		DmgInfo:SetInflictor(self)
+		DmgInfo:SetDamageType(DMG_DISSOLVE)
+
+		for i=0,3,0.5 do
+			timer.Simple(i, function()
+				for _,v in pairs(ents.FindInSphere(tr.HitPos, 150)) do
+					if v:IsPlayer() or v:IsNPC() then
+						DmgInfo:SetDamage(math.Rand(20,50))
+						v:TakeDamageInfo(DmgInfo)
+					end
+				end
+			end)
+		end
+		
+		timer.Simple(2.7, function()
+			for _,v in pairs(ents.FindInSphere(tr.HitPos, 300)) do
+				if v:IsPlayer() or v:IsNPC() then
+					DmgInfo:SetDamage(math.Rand(300,400))
+					v:TakeDamageInfo(DmgInfo)
+				end
+			end
+		end)
+		
+		WorldSound(ExplosionSound, tr.HitPos)
+		
 	end
-	WDS2.CreateExplosion(tr.HitPos, 70, 300, self)
 	
 	self:GetPhysicsObject():ApplyForceCenter(self:GetForward()*-50000)
 	
@@ -87,11 +145,6 @@ function ENT:FireShot()
 		ed:SetStart(Pos)
 		ed:SetOrigin(tr.HitPos)
 	util.Effect("wds2_railgun_trace",ed,true,true)
-
-	local ed = EffectData()
-		ed:SetStart(Pos)
-		ed:SetNormal(tr.HitNormal)
-	util.Effect("wds2_railgun_explosion",ed,true,true)
 	
 	local ed = EffectData()
 		ed:SetEntity(self)
@@ -111,33 +164,8 @@ function ENT:FireShot()
 		ed:SetStart(Vector(0,0,70)) // Gravity on the smoke
 	util.Effect("wds2_railgun_ammosmoke",ed,true,true)
 	
-	local DmgInfo = DamageInfo()
-	DmgInfo:SetAttacker(self.WDSO)
-	DmgInfo:SetInflictor(self)
-	DmgInfo:SetDamageType(DMG_DISSOLVE)
-
-	for i=0,3,0.5 do
-		timer.Simple(i, function()
-			for _,v in pairs(ents.FindInSphere(tr.HitPos, 150)) do
-				if v:IsPlayer() or v:IsNPC() then
-					DmgInfo:SetDamage(math.Rand(20,50))
-					v:TakeDamageInfo(DmgInfo)
-				end
-			end
-		end)
-	end
-	
-	timer.Simple(2.7, function()
-		for _,v in pairs(ents.FindInSphere(tr.HitPos, 300)) do
-			if v:IsPlayer() or v:IsNPC() then
-				DmgInfo:SetDamage(math.Rand(300,400))
-				v:TakeDamageInfo(DmgInfo)
-			end
-		end
-	end)
-	
 	self:EmitSound(ShootSound)
-	WorldSound(ExplosionSound, tr.HitPos)
+	
 	self.AmmoCapsule.HasCharge = false
 	self.AmmoCapsule:SetParent()
 	constraint.RemoveAll(self.AmmoCapsule)
@@ -145,10 +173,13 @@ function ENT:FireShot()
 	self.AmmoCapsule = nil
 	
 	self.LastShot = CurTime()
+	
 end
 
 function ENT:TriggerInput(name,val)
 	if name == "Fire" then
 		self.ShouldFire = tobool(val)
+	elseif name == "Penetrate" then
+		self.PenetrationShot = tobool(val)
 	end
 end
