@@ -6,8 +6,8 @@ local Col = Color(255,70,70,150)
 function EFFECT:Init(d)
 	self.StartPos = d:GetStart()
 	self.EndPos = d:GetOrigin()
-	self.DieTime = CurTime()+0.3
-	self.Entity:SetRenderBoundsWS(self.StartPos,self.EndPos)
+	self.DieTime = CurTime() + 0.3
+	self.Entity:SetRenderBoundsWS(self.StartPos, self.EndPos)
 end
 
 function EFFECT:Think()
