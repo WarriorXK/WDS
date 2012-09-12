@@ -9,7 +9,11 @@ function EFFECT:Init(d)
 	self.Size = d:GetMagnitude()
 	self.TargetEntity = d:GetEntity()
 	
-	self.Emitter = ParticleEmitter(self.TargetEntity:GetPos())
+	if ValidEntity(self.TargetEntity) then
+		self.TargetEntity.Draw = function() end
+		
+		self.Emitter = ParticleEmitter(self.TargetEntity:GetPos())
+	end
 	
 end
 
@@ -32,13 +36,15 @@ function EFFECT:Think()
 			particle:SetRollDelta(math.Rand(-1,1))
 			particle:SetAirResistance(100)
 			particle:SetGravity(WDS2.ZeroVector)
+			particle:SetCollide(true)
+			particle:SetCollideCallback(function(part) part:SetDieTime(0) end)
 			self.NextParticle = CurTime() + 0.01
 			
 		end
 		
 	else
 	
-		self.Emitter:Finish()
+		if self.Emitter then self.Emitter:Finish() end
 		
 	end
 	

@@ -92,8 +92,6 @@ function ENT:OnRemove()
 	if self.ChargeSound:IsPlaying() then self.ChargeSound:Stop() end
 end
 
-function ENT:UpdateTransmitState() return TRANSMIT_ALWAYS end
-
 function ENT:TriggerInput(name,val)
 	if name == "Fire" then
 		self.ShouldFire = tobool(val)

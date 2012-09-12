@@ -20,6 +20,8 @@ function EFFECT:Think()
 		particle:SetRollDelta(math.Rand(-1,1))
 		particle:SetAirResistance(100)
 		particle:SetGravity(WDS2.ZeroVector)
+		particle:SetCollide(true)
+		particle:SetCollideCallback(function(part) part:SetLifeTime(0.2) part:SetDieTime(0.3) end)
 		self.NextParticle = CurTime() + 0.01
 	else
 		self.Emitter:Finish()

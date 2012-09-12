@@ -11,3 +11,5 @@ ENT.WireDebugName	= ENT.PrintName
 
 ENT.Spawnable		= true
 ENT.AdminSpawnable	= true
+
+function ENT:UpdateTransmitState() return TRANSMIT_ALWAYS end

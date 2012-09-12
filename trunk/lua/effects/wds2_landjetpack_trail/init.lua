@@ -38,6 +38,8 @@ function EFFECT:Think()
 			RFlame:SetAirResistance(300)
 			RFlame:SetGravity(WDS2.ZeroVector)
 			RFlame:SetVelocity(PartVel + RandVel)
+			RFlame:SetCollide(true)
+			RFlame:SetCollideCallback(function(part) part:SetLifeTime(0.2) part:SetDieTime(0.3) end)
 			
 			local RSmoke = self.Emitter:Add("particles/smokey",RPos+Vector(math.random(-2,2),math.random(-2,2),math.random(-2,2)))
 			RSmoke:SetLifeTime(1.5)
@@ -51,6 +53,7 @@ function EFFECT:Think()
 			RSmoke:SetAirResistance(300)
 			RSmoke:SetGravity(WDS2.ZeroVector)
 			RSmoke:SetVelocity(PartVel + RandVel)
+			RSmoke:SetCollide(true)
 			
 			// Left Thruster
 			local LFlame = self.Emitter:Add("particles/flamelet"..math.random(1,5),LPos)
@@ -63,6 +66,8 @@ function EFFECT:Think()
 			LFlame:SetAirResistance(300)
 			LFlame:SetGravity(WDS2.ZeroVector)
 			LFlame:SetVelocity(PartVel + RandVel)
+			LFlame:SetCollide(true)
+			LFlame:SetCollideCallback(function(part) part:SetLifeTime(0.2) part:SetDieTime(0.3) end)
 
 			local LSmoke = self.Emitter:Add("particles/smokey",LPos+Vector(math.random(-2,2),math.random(-2,2),math.random(-2,2)))
 			LSmoke:SetLifeTime(1.5)
@@ -76,6 +81,7 @@ function EFFECT:Think()
 			LSmoke:SetAirResistance(300)
 			LSmoke:SetGravity(WDS2.ZeroVector)
 			LSmoke:SetVelocity(PartVel + RandVel)
+			LSmoke:SetCollide(true)
 			
 			self.NextParticles = CurTime() + 0.005
 		end

@@ -7,7 +7,7 @@ function ENT:Initialize()
 	self.LoopSound:Play()
 end
 
-function ENT:Draw() end
+function ENT:Draw() self:DrawModel() end
 
 function ENT:OnRemove()
 	self.LoopSound:Stop()
