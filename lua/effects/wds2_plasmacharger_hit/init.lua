@@ -22,6 +22,8 @@ function EFFECT:Init(d)
 		Particle:SetRoll(0)
 		Particle:SetRollDelta(0)
 		Particle:SetColor(75, math.random(80,180), 255)
+		Particle:SetCollide(true)
+		Particle:SetCollideCallback(function(part) part:SetDieTime(0) end)
 	end
 	
 end
