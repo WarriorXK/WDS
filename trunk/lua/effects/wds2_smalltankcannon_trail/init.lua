@@ -3,14 +3,14 @@ local Mat = "wds/effects/blankparticle"
 
 function EFFECT:Init(d)
 	self.TargetEntity = d:GetEntity()
-	if ValidEntity(self.TargetEntity) then
+	if IsValid(self.TargetEntity) then
 		self.TargetEntity:SetColor(255,255,255,0)
 		self.Emitter = ParticleEmitter(self.TargetEntity:GetPos())
 	end
 end
 
 function EFFECT:Think()
-	local Valid = ValidEntity(self.TargetEntity)
+	local Valid = IsValid(self.TargetEntity)
 	if Valid then
 		local Flame = self.Emitter:Add("particles/flamelet"..math.random(1,5),self.TargetEntity:GetPos())
 		Flame:SetVelocity(self.TargetEntity:GetVelocity())

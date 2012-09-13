@@ -11,7 +11,7 @@ function sv_GCWDSM_Load()
 	end
 	function cbt_dealdevhit(e,d,p)
 		WDS2.DealDirectDamage(e,d)
-		if ValidEntity(e) and !e.WDS2.Dead then
+		if IsValid(e) and !e.WDS2.Dead then
 			return 1
 		end
 		return 2
@@ -36,7 +36,7 @@ function sv_GCWDSM_Load()
 		return WDS2.CanDamageEntity(e)
 	end
 	function gcombat.addprotectedent(ent)
-		if !ValidEntity(ent) then return end
+		if !IsValid(ent) then return end
 		if type(ent.WDS2) != "table" then WDS2.InitProp(ent) end
 		ent.WDS2.Immune = true
 	end
@@ -58,7 +58,7 @@ function sv_GCWDSM_Load()
 		if !e then return false end
 		if type(e) == "string" then
 			table.insert(WDS2.ProtectedClasses,e)
-		elseif ValidEntity(e) then
+		elseif IsValid(e) then
 			table.insert(WDS2.ProtectedClasses,e:GetClass())
 		end
 	end

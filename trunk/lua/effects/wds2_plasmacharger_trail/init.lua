@@ -9,7 +9,7 @@ function EFFECT:Init(d)
 	self.Size = d:GetMagnitude()
 	self.TargetEntity = d:GetEntity()
 	
-	if ValidEntity(self.TargetEntity) then
+	if IsValid(self.TargetEntity) then
 		self.TargetEntity.Draw = function() end
 		
 		self.Emitter = ParticleEmitter(self.TargetEntity:GetPos())
@@ -19,7 +19,7 @@ end
 
 function EFFECT:Think()
 
-	local ValidEffect = self.Emitter and ValidEntity(self.TargetEntity)
+	local ValidEffect = self.Emitter and IsValid(self.TargetEntity)
 	
 	if ValidEffect then
 	

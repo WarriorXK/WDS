@@ -35,7 +35,7 @@ function ENT:SpawnFunction(p,t)
 end
 
 function ENT:Think()
-	if self.LastShot+4 <= CurTime() and !ValidEntity(self.Missle) then
+	if self.LastShot+4 <= CurTime() and !IsValid(self.Missle) then
 		if self.ShouldFire then
 			self:FireShot()
 		end

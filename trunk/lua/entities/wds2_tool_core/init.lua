@@ -78,7 +78,7 @@ function ENT:TakeCoreDamage(ent, damage, typ)
 	WDS2.Debug.Print("WDS2 Core : " .. DamagePerEnt .. " per ent")
 	
 	for _,v in pairs(AllEnts) do
-		if ValidEntity(v) then
+		if IsValid(v) then
 			if WDS2.CanDamageEntity(v) then
 			
 				local Dmg = (DamagePerEnt * WDS2.CalculateDamageMul(typ, ent))
@@ -96,7 +96,7 @@ end
 
 hook.Add("WDS2_EntityShouldTakeDamage", "WDS2_EntityShouldTakeDamage_wdscore", function(ent, damage, typ)
 
-	if ValidEntity(ent) then
+	if IsValid(ent) then
 
 		for _,v in pairs(ents.FindByClass("wds2_tool_core")) do
 

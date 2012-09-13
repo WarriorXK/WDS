@@ -19,7 +19,7 @@ function ENT:Initialize()
 end
 
 function ENT:Touch(ent)
-	if ValidEntity(ent) and ent:GetClass() == "shield" then // Stargate shield Support
+	if IsValid(ent) and ent:GetClass() == "shield" then // Stargate shield Support
 		self:Hit(ent)
 	end
 end

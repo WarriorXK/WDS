@@ -63,7 +63,7 @@ function ENT:Think()
 end
 
 function ENT:Touch(ent)
-	if ValidEntity(ent) and ent:GetClass() == "shield" then // Stargate shield Support
+	if IsValid(ent) and ent:GetClass() == "shield" then // Stargate shield Support
 		self:Die()
 	end
 end
@@ -74,10 +74,10 @@ function ENT:PhysicsCollide(data,physobj)
 end
 
 function ENT:Die(ent)
-	if ValidEntity(ent) then
+	if IsValid(ent) then
 		local DmgInfo = DamageInfo()
-		DmgInfo:SetAttacker(ValidEntity(self.WDSO) and self.WDSO or self)
-		DmgInfo:SetInflictor(ValidEntity(self.Cannon) and self.Cannon or self)
+		DmgInfo:SetAttacker(IsValid(self.WDSO) and self.WDSO or self)
+		DmgInfo:SetInflictor(IsValid(self.Cannon) and self.Cannon or self)
 		DmgInfo:SetDamageType(DMG_BURN)
 		DmgInfo:SetDamage(math.random(40,60))
 		ent:TakeDamageInfo(DmgInfo)

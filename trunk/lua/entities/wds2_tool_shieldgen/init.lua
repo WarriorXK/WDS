@@ -44,7 +44,7 @@ end
 function ENT:Think()
 	if self.ShouldBeOn and !self.Drained then
 		if self:GetEnergy() >= math.max(self.DrainPerThink, 1) then
-			if !ValidEntity(self.ShieldDome) then
+			if !IsValid(self.ShieldDome) then
 				self:CreateDome()
 			end
 			self:SetEnergy(self:GetEnergy() - self.DrainPerThink)
@@ -52,7 +52,7 @@ function ENT:Think()
 			self.Drained = true
 		end
 	else
-		if ValidEntity(self.ShieldDome) then
+		if IsValid(self.ShieldDome) then
 			self.ShieldDome:Remove()
 		end
 	end
@@ -91,7 +91,7 @@ function ENT:SetRadius(val)
 end
 
 function ENT:CreateDome()
-	if ValidEntity(self.ShieldDome) then self.ShieldDome:Remove() end
+	if IsValid(self.ShieldDome) then self.ShieldDome:Remove() end
 	self.ShieldDome = ents.Create("wds2_misc_shielddome")
 	self.ShieldDome:SetPos(self:LocalToWorld(self:OBBCenter()))
 	self.ShieldDome:SetAngles(self:GetAngles())
@@ -116,7 +116,7 @@ function ENT:TriggerInput(name,val)
 end
 
 hook.Add("WDS2_EntityShouldTakeDamage", "WDS2_EntityShouldTakeDamage_shieldgen", function(ent, damage)
-	if ValidEntity(ent) and ent:GetClass() == "wds2_misc_shielddome" then
+	if IsValid(ent) and ent:GetClass() == "wds2_misc_shielddome" then
 		local dmginfo = DamageInfo()
 		dmginfo:SetDamage(damage)
 		ent.Generator:TakeDamage(dmginfo)

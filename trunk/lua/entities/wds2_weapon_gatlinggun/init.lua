@@ -102,7 +102,7 @@ function ENT:FireShot()
 	local pos = self:LocalToWorld(self.ShootPosses[self.CurrentBarrel])
 	local tr = WDS2.TraceLine(pos, pos + (self:GetForward() * 50000), {self})
 	
-	if ValidEntity(tr.Entity) and !tr.Entity:IsWorld() then
+	if IsValid(tr.Entity) and !tr.Entity:IsWorld() then
 	
 		WDS2.DealDirectDamage(tr.Entity,17,"AP")
 		local Dam = DamageInfo()

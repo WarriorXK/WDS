@@ -28,7 +28,7 @@ function ENT:Think()
 	local tr = self:GetTrace()
 	local Health
 	local MaxHealth
-	if ValidEntity(tr.Entity) then
+	if IsValid(tr.Entity) then
 		if tr.Entity:IsPlayer() or tr.Entity:IsNPC() then
 			Health = tr.Entity:Health()
 			MaxHealth = tr.Entity:GetMaxHealth()

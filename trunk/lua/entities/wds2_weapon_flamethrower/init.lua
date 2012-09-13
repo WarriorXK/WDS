@@ -114,7 +114,7 @@ end
 
 function WDS2_Flamethrower_ScaleDamage(ent, hitgrp, dmginfo)
 	local Inflictor = dmginfo:GetInflictor()
-	if ValidEntity(Inflictor) and (Inflictor:GetClass() == "wds2_projectile_flame" or Inflictor:GetClass() == "wds2_projectile_fireball") then // Prevents damage from the projectile as physical object
+	if IsValid(Inflictor) and (Inflictor:GetClass() == "wds2_projectile_flame" or Inflictor:GetClass() == "wds2_projectile_fireball") then // Prevents damage from the projectile as physical object
 		if dmginfo:GetDamageType() == DMG_CRUSH then
 			dmginfo:ScaleDamage(0)
 		end
