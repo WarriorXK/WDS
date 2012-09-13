@@ -17,7 +17,7 @@ end
 
 function ENT:Think()
 	//self:CheckColor()
-	if !ValidEntity(self.Generator) then self:Remove() end
+	if !IsValid(self.Generator) then self:Remove() end
 end
 
 function ENT:CheckColor()

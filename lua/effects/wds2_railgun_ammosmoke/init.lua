@@ -12,13 +12,13 @@ function EFFECT:Init(d)
 	self.ParticleDelay = d:GetMagnitude() or 0.03
 	self.LifeTime = d:GetRadius()
 	self.EndTime = CurTime()+(self.LifeTime or 4)
-	if ValidEntity(self.TargetEntity) then
+	if IsValid(self.TargetEntity) then
 		self.Emitter = ParticleEmitter(self.TargetEntity:GetPos())
 	end
 end
 
 function EFFECT:Think()
-	local Valid = ValidEntity(self.TargetEntity)
+	local Valid = IsValid(self.TargetEntity)
 	if Valid then
 	
 		if self.NextSmoke <= CurTime() then

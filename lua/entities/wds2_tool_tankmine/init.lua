@@ -61,7 +61,7 @@ end
 
 function ENT:Think()
 
-	if self.HasAttached and ValidEntity(self.AttachedEnt) then
+	if self.HasAttached and IsValid(self.AttachedEnt) then
 	
 		if self.AttachTime + 2 <= CurTime() and !self.Constrained then
 		

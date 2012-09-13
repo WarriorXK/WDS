@@ -23,7 +23,7 @@ function ENT:Initialize()
 end
 
 function ENT:Touch(ent)
-	if ValidEntity(ent) and ent:GetClass() == "shield" then // Stargate shield Support
+	if IsValid(ent) and ent:GetClass() == "shield" then // Stargate shield Support
 		self:Explode()
 	end
 end
@@ -42,7 +42,7 @@ end
 
 function ENT:PhysicsSimulate(phys,deltatime)
 	phys:Wake()
-	self.TargetPos = (ValidEntity(self.Launcher) and self.Launcher:GetLaserEnabled() and !self.Dumb) and self.Launcher:GetTrace().HitPos or self.TargetPos
+	self.TargetPos = (IsValid(self.Launcher) and self.Launcher:GetLaserEnabled() and !self.Dumb) and self.Launcher:GetTrace().HitPos or self.TargetPos
 	local pr = {}
 	pr.secondstoarrive	= 0.5
 	pr.pos				= self:GetPos()+self:GetForward()*80

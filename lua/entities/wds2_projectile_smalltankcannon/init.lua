@@ -26,7 +26,7 @@ function ENT:Initialize()
 end
 
 function ENT:Touch(ent)
-	if ValidEntity(ent) and ent:GetClass() == "shield" then // Stargate shield Support
+	if IsValid(ent) and ent:GetClass() == "shield" then // Stargate shield Support
 		self:Explode()
 	end
 end
@@ -48,7 +48,7 @@ function ENT:Explode(pos)
 end
 
 function ENT:PhysicsUpdate(phys)
-	if ValidEntity(phys) then
+	if IsValid(phys) then
 		phys:ApplyForceOffset( Vector(0, 0, -70), self:GetForward() * 5 )
 	end
 end

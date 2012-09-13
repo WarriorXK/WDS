@@ -28,7 +28,7 @@ function ENT:Think()
 end
 
 function ENT:Touch(ent)
-	if ValidEntity(ent) and ent:GetClass() == "shield" then // Stargate shield Support
+	if IsValid(ent) and ent:GetClass() == "shield" then // Stargate shield Support
 		self:Die()
 	end
 end
@@ -39,8 +39,8 @@ function ENT:PhysicsCollide(data,physobj)
 end
 
 function ENT:Die(ent)
-	if ValidEntity(ent) then
-		local Att = ValidEntity(self.WDSO) and self.WDSO or self.Cannon
+	if IsValid(ent) then
+		local Att = IsValid(self.WDSO) and self.WDSO or self.Cannon
 		local DmgInfo = DamageInfo()
 		DmgInfo:SetAttacker(self.WDSO)
 		DmgInfo:SetInflictor(self)

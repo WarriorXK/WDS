@@ -9,7 +9,7 @@ function EFFECT:Init(d)
 end
 
 function EFFECT:Think()
-	if ValidEntity(self.TargetEntity) and self.NextParticle <= CurTime() then
+	if IsValid(self.TargetEntity) and self.NextParticle <= CurTime() then
 		local particle = self.Emitter:Add("particles/flamelet"..math.random(1,5),self.TargetEntity:GetPos())
 		particle:SetVelocity(self.TargetEntity:GetVelocity())
 		particle:SetLifeTime(1.5)
@@ -38,7 +38,7 @@ function EFFECT:Think()
 	else
 		self.Emitter:Finish()
 	end
-	return ValidEntity(self.TargetEntity)
+	return IsValid(self.TargetEntity)
 end
 
 function EFFECT:Render() 

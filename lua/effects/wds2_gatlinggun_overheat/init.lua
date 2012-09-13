@@ -7,7 +7,7 @@ function EFFECT:Init(d)
 
 	self.TargetEntity = d:GetEntity()
 
-	if ValidEntity(self.TargetEntity) then
+	if IsValid(self.TargetEntity) then
 		self.Emitter = ParticleEmitter(self.TargetEntity:GetPos())
 	end
 	
@@ -15,7 +15,7 @@ end
 
 function EFFECT:Think()
 
-	local Valid = ValidEntity(self.TargetEntity) and self.TargetEntity.dt.Overheated and self.TargetEntity.dt.Heat > 2
+	local Valid = IsValid(self.TargetEntity) and self.TargetEntity.dt.Overheated and self.TargetEntity.dt.Heat > 2
 	if Valid then
 	
 		if self.NextSmoke <= CurTime() then

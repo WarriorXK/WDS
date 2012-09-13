@@ -162,8 +162,8 @@ function WDS2.CanDamageEntity(e)
 end
 
 function WDS2.IsValid(e)
-	if !ValidEntity(e) then return false end
-	if !ValidEntity(e:GetPhysicsObject()) then return false end
+	if !IsValid(e) then return false end
+	if !IsValid(e:GetPhysicsObject()) then return false end
 	if !WDS2.EntHasValidTable(e) then WDS2.InitProp(e) end
 	return true
 end
@@ -284,7 +284,7 @@ function WDS2.Think()
 	if WDS2.NextThink > CurTime() then return end
 	WDS2.NextThink = CurTime() + 0.015
 	for k,v in pairs(WDS2.DyingProps) do
-		if ValidEntity(v) then
+		if IsValid(v) then
 			v:SetRenderMode(RENDERMODE_TRANSCOLOR) // Why is this necessary for transparancy?
 			local C = v:GetColor()
 			v:SetColor(Color(C.r,C.g,C.b,C.a-1))

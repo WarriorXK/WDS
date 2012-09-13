@@ -8,14 +8,14 @@ EFFECT.NextParticles = 0
 
 function EFFECT:Init(d)
 	self.TargetEntity = d:GetEntity()
-	if ValidEntity(self.TargetEntity) then
+	if IsValid(self.TargetEntity) then
 		self.Emitter = ParticleEmitter(self.TargetEntity:GetPos())
 	end
 end
 
 function EFFECT:Think()
-	local Valid = ValidEntity(self.TargetEntity) and self.TargetEntity:Alive()
-	if Valid and ValidEntity(self.TargetEntity:GetActiveWeapon()) and self.TargetEntity:GetActiveWeapon():GetClass() == "wds2_swep_landjetpack" and self.TargetEntity:GetActiveWeapon().dt.Flying then
+	local Valid = IsValid(self.TargetEntity) and self.TargetEntity:Alive()
+	if Valid and IsValid(self.TargetEntity:GetActiveWeapon()) and self.TargetEntity:GetActiveWeapon():GetClass() == "wds2_swep_landjetpack" and self.TargetEntity:GetActiveWeapon().dt.Flying then
 
 		local Ang = self.TargetEntity:EyeAngles()
 		Ang.p = 0

@@ -7,13 +7,13 @@ EFFECT.NextFlame = 0
 function EFFECT:Init(d)
 	self.TargetEntity = d:GetEntity()
 	self.CreationTime = CurTime()
-	if ValidEntity(self.TargetEntity) then
+	if IsValid(self.TargetEntity) then
 		self.Emitter = ParticleEmitter(self.TargetEntity:GetPos())
 	end
 end
 
 function EFFECT:Think()
-	local Valid = ValidEntity(self.TargetEntity)
+	local Valid = IsValid(self.TargetEntity)
 	if self.NextFlame <= CurTime() then
 		if Valid then
 			local Mul = CurTime() - self.CreationTime

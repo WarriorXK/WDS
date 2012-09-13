@@ -25,7 +25,7 @@ function ENT:SpawnFunction(p,t)
 	e:Spawn()
 	e:Activate()
 	e:SetPos(t.HitPos+t.HitNormal*-e:OBBMins().z)
-	if ValidEntity(t.Entity) and t.Entity:GetClass() == "wds2_weapon_railgun" then t.Entity:AttemptAmmoConnect(e) end
+	if IsValid(t.Entity) and t.Entity:GetClass() == "wds2_weapon_railgun" then t.Entity:AttemptAmmoConnect(e) end
 	return e
 end
 
@@ -40,7 +40,7 @@ function ENT:Eject(ent)
 end
 
 function ENT:Despawn()
-	if ValidEntity(self) then
+	if IsValid(self) then
 		WDS2.PropDeath(self)
 	end
 end

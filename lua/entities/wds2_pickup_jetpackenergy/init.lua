@@ -37,7 +37,7 @@ end
 function ENT:Charge(ply)
 	if ply:IsPlayer() then
 		local Jetpack = ply:GetWeapon("wds2_swep_landjetpack")
-		if ValidEntity(Jetpack) and Jetpack.dt.JetCharge < WDS2.Jetpack.MaxEnergy then
+		if IsValid(Jetpack) and Jetpack.dt.JetCharge < WDS2.Jetpack.MaxEnergy then
 			Jetpack.dt.JetCharge = math.Clamp(Jetpack.dt.JetCharge + 100,0,WDS2.Jetpack.MaxEnergy)
 			ply:EmitSound("items/battery_pickup.wav")
 			self:Remove()

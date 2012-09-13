@@ -42,7 +42,7 @@ function ENT:SpawnFunction(p,t)
 end
 
 function ENT:Think()
-	if self.LastShot+5 <= CurTime() and ValidEntity(self.AmmoCapsule) and self.AmmoCapsule.HasCharge then
+	if self.LastShot+5 <= CurTime() and IsValid(self.AmmoCapsule) and self.AmmoCapsule.HasCharge then
 		if self.ShouldFire then
 			self:FireShot()
 		end
@@ -59,7 +59,7 @@ function ENT:Touch(ent)
 end
 
 function ENT:AttemptAmmoConnect(ent)
-	if ValidEntity(ent) and !ValidEntity(self.AmmoCapsule) and ent:GetClass() == "wds2_ammo_railgun" and ent.HasCharge then
+	if IsValid(ent) and !IsValid(self.AmmoCapsule) and ent:GetClass() == "wds2_ammo_railgun" and ent.HasCharge then
 		self.AmmoCapsule = ent
 		ent:SetAngles(self:LocalToWorldAngles(AmmoAng))
 		ent:SetPos(self:LocalToWorld(AmmoPos))
@@ -76,7 +76,7 @@ function ENT:FireShot()
 
 	if self.PenetrationShot then
 		
-		if ValidEntity(tr.Entity) then
+		if IsValid(tr.Entity) then
 			WDS2.DealDirectDamage(tr.Entity, 500, "AT")
 			
 			local valid = true
@@ -95,7 +95,7 @@ function ENT:FireShot()
 		
 	else
 	
-		if ValidEntity(tr.Entity) then
+		if IsValid(tr.Entity) then
 			WDS2.DealDirectDamage(tr.Entity,500,"AT")
 		end
 		WDS2.CreateExplosion(tr.HitPos, 70, 300, self)
