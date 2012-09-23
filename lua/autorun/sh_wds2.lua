@@ -5,7 +5,7 @@ end
 
 WDS2 = WDS2 or {}
 WDS2.Debug = {}
-WDS2.Debug.Enabled = SinglePlayer()
+WDS2.Debug.Enabled = game.SinglePlayer()
 WDS2.NoProjectileTouch =	{
 								wds2_weapon_lasermissile = "wds2_projectile_lasermissile",
 								wds2_weapon_plasmacharger = "wds2_projectile_plasmacharger",
