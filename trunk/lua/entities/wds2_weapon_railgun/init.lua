@@ -130,7 +130,7 @@ function ENT:FireShot()
 			end
 		end)
 		
-		WorldSound(ExplosionSound, tr.HitPos)
+		sound.Play(ExplosionSound, tr.HitPos)
 		
 	end
 	
