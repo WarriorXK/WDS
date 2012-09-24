@@ -198,7 +198,7 @@ function WDS2.CreateExplosion(pos, rad, dmg, dealer, dmgtype)
 	local filt = type(dealer) == "table" and dealer or {dealer}
 	for _,targ in pairs(ents.FindInSphere(pos,rad)) do
 		if !table.HasValue(filt,targ) then
-			WDS2.DealDirectDamage(targ, dmg*math.Clamp(-((pos:Distance(targ:NearestPoint(pos))/rad)-1),0.2,1), dmgtype)
+			WDS2.DealDirectDamage(targ, dmg * math.Clamp(-((pos:Distance(targ:NearestPoint(pos))/rad)-1),0.2,1), dmgtype)
 		end
 	end
 end
