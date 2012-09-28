@@ -2,8 +2,9 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-ENT.ChargeSound = Sound("wds2/weapons/tankmine/charge.wav")
-ENT.AttachSound = ""
+local ActivateSound = Sound("wds2/weapons/tanksmine/activate.wav")
+local ChargeSound = Sound("wds2/weapons/tankmine/charge.wav")
+local AttachSound = Sound("wds2/weapons/tankmine/attack.wav")
 
 ENT.IsBeingHeld = false
 ENT.IsExploding = false
@@ -47,7 +48,7 @@ function ENT:SpawnFunction(p,t)
 	e:Spawn()
 	e:Activate()
 	e:SetPos(t.HitPos+t.HitNormal*-e:OBBMins().z)
-	e.ChargeSound = CreateSound(e,"wds2/weapons/tankmine/charge.wav")
+	e.ChargeSound = CreateSound(e, ChargeSound)
 	e.ChargeSound:ChangeVolume(10)
 	return e
 	
@@ -152,6 +153,8 @@ function ENT:Arm(ply)
 		self.IsArmed = true
 		self.WDSO = ply
 		
+		self:EmitSound( ActivateSound )
+		
 	end
 	
 end
@@ -160,7 +163,7 @@ function ENT:Touch(ent)
 
 	if self.IsArmed and !self.HasAttached and !self.IsBeingHeld then
 	
-		self:EmitSound(self.AttachSound)
+		self:EmitSound( AttachSound )
 	
 		self.HasAttached = true
 		self.AttachedEnt = ent

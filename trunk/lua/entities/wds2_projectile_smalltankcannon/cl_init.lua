@@ -2,16 +2,7 @@ include('shared.lua')
 
 local Col = Color(168,143,42,255)
 
-function ENT:Initialize()
-	//self.LoopSound = CreateSound(self,"wds2/weapons/smalltankcannon/projectile_loop.wav") //Todo : Change the sound
-	//self.LoopSound:Play()
-end
-
 function ENT:Draw() end // We don't need to be drawn
-
-function ENT:OnRemove()
-	//self.LoopSound:Stop()
-end
 
 function ENT:Think()
 

@@ -2,6 +2,8 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
+local FireSound = Sound("wds2/weapons/smalltankcannon/fire.wav")
+
 local BarrelExit = Vector(52,0,0)
 
 ENT.ShouldFire = false
@@ -60,7 +62,7 @@ function ENT:FireShot()
 	
 	self:GetPhysicsObject():ApplyForceCenter(self:GetForward()*-5000)
 	
-	//self:EmitSound("wds2/weapons/smalltankcannon/fire.wav") //Todo : Change the sound
+	self:EmitSound( FireSound )
 
 	local ed = EffectData()
 		ed:SetStart(Pos)
