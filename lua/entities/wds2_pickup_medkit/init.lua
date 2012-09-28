@@ -2,6 +2,8 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
+local PickupSound = Sound("items/medshot4.wav")
+
 function ENT:Initialize()
 	self:SetModel("models/Items/HealthKit.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
@@ -37,7 +39,7 @@ end
 function ENT:Heal(ply)
 	if ply:IsPlayer() and ply:Health() < ply:GetMaxHealth() then
 		ply:SetHealth(math.Clamp(ply:Health()+50,0,ply:GetMaxHealth()))
-		ply:EmitSound("items/medshot4.wav")
+		ply:EmitSound( PickupSound )
 		self:Remove()
 		return
 	end

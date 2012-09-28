@@ -61,7 +61,7 @@ function ENT:FireShot()
 	
 	if self.FireDumb then self.Missle = NULL end
 
-	self:EmitSound(FireSound) //Todo : Find a better sound?
+	self:EmitSound( FireSound )
 
 	self.LastShot = CurTime()
 end

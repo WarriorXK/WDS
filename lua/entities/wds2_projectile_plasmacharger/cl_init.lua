@@ -1,9 +1,10 @@
 include('shared.lua')
 
+local LoopSound = Sound("wds2/weapons/plasmacharger/projectile_loop.wav")
 local Col = Color(75,180,255,255)
 
 function ENT:Initialize()
-	self.LoopSound = CreateSound(self,"wds2/weapons/plasmacharger/projectile_loop.wav")
+	self.LoopSound = CreateSound( self, LoopSound )
 	self.LoopSound:Play()
 end
 

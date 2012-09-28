@@ -2,6 +2,8 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
+local FireSound = Sound("wds2/weapons/gatlinggun/fire.wav")
+
 ENT.ShootPosses =	{
 						Vector(29,-1.2,6.4),
 						Vector(29,2.7,4.2),
@@ -121,7 +123,7 @@ function ENT:FireShot()
 		
 	end
 
-	self:EmitSound("wds2/weapons/gatlinggun/fire.wav")
+	self:EmitSound( FireSound )
 
 	local ed = EffectData()
 		ed:SetStart(pos)

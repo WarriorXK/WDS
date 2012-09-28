@@ -2,6 +2,8 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
+local PickupSound = Sound("items/battery_pickup.wav")
+
 function ENT:Initialize()
 	self:SetModel("models/wds/jetfuel.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
@@ -39,7 +41,7 @@ function ENT:Charge(ply)
 		local Jetpack = ply:GetWeapon("wds2_swep_landjetpack")
 		if IsValid(Jetpack) and Jetpack.dt.JetCharge < WDS2.Jetpack.MaxEnergy then
 			Jetpack.dt.JetCharge = math.Clamp(Jetpack.dt.JetCharge + 100,0,WDS2.Jetpack.MaxEnergy)
-			ply:EmitSound("items/battery_pickup.wav")
+			ply:EmitSound( PickupSound )
 			self:Remove()
 			return
 		end
