@@ -94,7 +94,7 @@ function ENT:TriggerInput(name,val)
 end
 
 function WDS2_DualLaserTurret_EntityTakeDamage(Target, DmgInfo)
-	local Inflictor = dmginfo:GetInflictor()
+	local Inflictor = DmgInfo:GetInflictor()
 	if IsValid(Inflictor) and Inflictor:GetClass() == "wds2_projectile_duallaser" and DmgInfo:GetDamageType() == DMG_CRUSH then // Prevents damage from the projectile as physical object
 		if DmgInfo:GetDamageType() == DMG_CRUSH then
 			DmgInfo:ScaleDamage(0)
