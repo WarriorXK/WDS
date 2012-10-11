@@ -95,7 +95,7 @@ end
 
 function WDS2_DualLaserTurret_EntityTakeDamage(Target, DmgInfo)
 	local Inflictor = DmgInfo:GetInflictor()
-	if IsValid(Inflictor) and Inflictor:GetClass() == "wds2_projectile_duallaser" and DmgInfo:GetDamageType() == DMG_CRUSH then // Prevents damage from the projectile as physical object
+	if IsValid(Inflictor) and Inflictor:GetClass() == "wds2_projectile_duallaser" then // Prevents damage from the projectile as physical object
 		if DmgInfo:GetDamageType() == DMG_CRUSH then
 			DmgInfo:ScaleDamage(0)
 		end
