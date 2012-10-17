@@ -301,12 +301,15 @@ hook.Add("Think","WDS2.Think",WDS2.Think)
 
 hook.Add("PlayerSpawn","WDS2.PlayerSpawn",function(ply) ply:Extinguish() end)
 
-// Shamelessly stolen from Wiremod
-local cvar = GetConVar("sv_tags")
-timer.Create("WDS2_Tags",1,0,function()
-	local tags = cvar:GetString()
-	if (!tags:find( "WDS2" )) then
-		local tag = "WDS2"
-		RunConsoleCommand( "sv_tags", tags .. "," .. tag )
-	end	
+/*
+timer.Create( "WDS2_Tags", 10, 0, function()
+
+	local TagToAdd = "WDS2"
+	local tags = GetConVarString("sv_tags")
+	
+	if (!tags:find( TagToAdd )) then
+		RunConsoleCommand( "sv_tags", tags .. "," .. TagToAdd )
+	end
+	
 end)
+*/
