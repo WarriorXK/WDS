@@ -5,7 +5,6 @@ EFFECT.HasExploded = false
 EFFECT.NextSpark = 0
 
 function EFFECT:Init(d)
-	self.Vec = d:GetStart()
 	self.Pos = d:GetOrigin()
 	self.ExplosionDelay = 2.5
 	self.SparkDelay = 4

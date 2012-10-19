@@ -4,6 +4,8 @@ include('shared.lua')
 
 local BarrelExit = Vector(84,0,0)
 local FlareExit = Vector(70,0,0)
+
+local AmmoExitPos = Vector(-68.3390,0,18.3)
 local AmmoPos = Vector(-68.3390,0,13.8042)
 local AmmoAng = Angle(0,90,180)
 
@@ -72,7 +74,7 @@ end
 function ENT:FireShot()
 	local Pos = self:LocalToWorld(BarrelExit)
 
-	local tr = WDS2.TraceLine(Pos,Pos+(self:GetForward()*50000),{self})
+	local tr = WDS2.TraceLine(self:GetPos(),self:GetPos()+(self:GetForward()*50000),{self})
 
 	if self.PenetrationShot then
 		
@@ -101,7 +103,7 @@ function ENT:FireShot()
 		WDS2.CreateExplosion(tr.HitPos, 70, 300, self)
 
 		local ed = EffectData()
-			ed:SetStart(Pos)
+			ed:SetOrigin(tr.HitPos)
 			ed:SetNormal(tr.HitNormal)
 		util.Effect("wds2_railgun_explosion",ed,true,true)
 		
@@ -169,6 +171,7 @@ function ENT:FireShot()
 	self.AmmoCapsule.HasCharge = false
 	self.AmmoCapsule:SetParent()
 	constraint.RemoveAll(self.AmmoCapsule)
+	self.AmmoCapsule:SetPos(self:LocalToWorld(AmmoExitPos))
 	self.AmmoCapsule:Eject(self)
 	self.AmmoCapsule = nil
 	
