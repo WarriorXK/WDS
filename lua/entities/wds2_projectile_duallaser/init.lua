@@ -45,3 +45,14 @@ function ENT:Hit(hitent, data)
 	WDS2.DealDirectDamage(hitent,15,"AT")
 	self:Remove()
 end
+
+function WDS2_DualLaserTurret_EntityTakeDamage(Target, DmgInfo)
+	local Inflictor = DmgInfo:GetInflictor()
+	if IsValid(Inflictor) and Inflictor:GetClass() == "wds2_projectile_duallaser" then // Prevents damage from the projectile as physical object
+		if DmgInfo:GetDamageType() == DMG_CRUSH then
+			DmgInfo:ScaleDamage(0)
+		end
+		DmgInfo:SetDamageForce(WDS2.ZeroVector)
+	end
+end
+hook.Add("EntityTakeDamage","WDS2_DualLaserTurret_EntityTakeDamage",WDS2_DualLaserTurret_EntityTakeDamage)

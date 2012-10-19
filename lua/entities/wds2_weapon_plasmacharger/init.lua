@@ -49,7 +49,7 @@ end
 function ENT:CreateChargeSound()
 
 	self.ChargeSound = CreateSound( self, ChargeSound )
-	self.ChargeSound:ChangeVolume(5)
+	self.ChargeSound:ChangeVolume(5, 0)
 	
 end
 
@@ -77,7 +77,7 @@ function ENT:Think()
 		
 	end
 	
-	if self.ChargeSound:IsPlaying() then self.ChargeSound:ChangePitch(self.CurPitch) end
+	if self.ChargeSound:IsPlaying() then self.ChargeSound:ChangePitch(self.CurPitch, 0) end
 	
 	if self.Charge >= self.MinCharge then
 	

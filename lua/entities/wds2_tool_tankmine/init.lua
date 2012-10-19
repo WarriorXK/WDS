@@ -47,9 +47,9 @@ function ENT:SpawnFunction(p,t)
 	e.WDSO = p
 	e:Spawn()
 	e:Activate()
-	e:SetPos(t.HitPos+t.HitNormal*-e:OBBMins().z)
-	e.ChargeSound = CreateSound(e, ChargeSound)
-	e.ChargeSound:ChangeVolume(10)
+	e:SetPos( t.HitPos + t.HitNormal * -e:OBBMins().z )
+	e.ChargeSound = CreateSound( e, ChargeSound )
+	e.ChargeSound:ChangeVolume( 10, 0 )
 	return e
 	
 end

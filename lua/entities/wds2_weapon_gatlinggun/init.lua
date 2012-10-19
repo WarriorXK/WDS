@@ -123,7 +123,7 @@ function ENT:FireShot()
 		
 	end
 
-	self:EmitSound( FireSound )
+	self:EmitSound( FireSound, 0.4, 70 + (self.RPM / 2) )
 
 	local ed = EffectData()
 		ed:SetStart(pos)
