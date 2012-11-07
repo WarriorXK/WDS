@@ -29,15 +29,12 @@ function WDS2.PopulateAdminOptions(Panel)
 		Panel:CheckBox("Allow the use of jetpacks","wds2_jetpacksallowed"):SetToolTip("This option enables or disables the spawning of jetpacks. Default : Enabled")
 		local Sldr = Panel:NumSlider("Jetpack maximum energy:", "wds2_jetpackmaxenergy", 20, 500, 0)
 			Sldr:SetToolTip("This option specifies how much energy a jet pack has. Default : 80")
-			Sldr:SetValue(80)
 		
 		Sldr = Panel:NumSlider("Jetpack energy use:", "wds2_jetpackenergyuse", 0, 20, 0)
 			Sldr:SetToolTip("This option specifies how much energy the jetpack uses per second. Default : 5")
-			Sldr:SetValue(5)
 		
 		Sldr = Panel:NumSlider("Jetpack energy regeneration:", "wds2_jetpackenergyregeneration", 0, 20, 0)
 			Sldr:SetToolTip("This option specifies how much energy the jetpack recharges per second. Default : 5")
-			Sldr:SetValue(5)
 		
 	else
 		Panel:AddControl("Label",{Text="This panel is only available for admins"})
