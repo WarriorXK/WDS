@@ -1,7 +1,7 @@
 include('shared.lua')
 
 local EffectColor = Color(255, 255, 255, 255)
-local EffectMat = Material("phoenix_storms/glass")
+local EffectMat = Material("wds/effects/shieldsphere")
 
 ENT.CurSize = 1024
 
