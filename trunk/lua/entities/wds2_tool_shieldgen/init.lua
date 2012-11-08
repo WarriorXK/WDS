@@ -2,17 +2,11 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-ENT.DrainedThreshold = 200
 ENT.MaxEnergyDrain = 15
-ENT.DrainPerThink = 0
-ENT.MaxRadius = 1024
-ENT.MaxEnergy = 1000
-
+ENT.DisableEnergy = false
 ENT.EnergyDrain = ENT.MaxEnergyDrain
 ENT.ShouldBeOn = false
-ENT.DisableEnergy = false
 ENT.Drained = false
-ENT.Radius = ENT.MaxRadius
 ENT.Scale = 1
 
 function ENT:Initialize()
@@ -24,7 +18,7 @@ function ENT:Initialize()
 	if phys:IsValid() then
 		phys:Wake()
 	end
-	self.Inputs = Wire_CreateInputs(self,{"On", "DisableEnergy", "MaxEnergyDrain"})
+	self.Inputs = Wire_CreateInputs(self,{"On", "DisableEnergy", "MaxEnergyDrain", "Radius"})
 	self.Outputs = Wire_CreateOutputs(self,{"Enabled", "Energy"})
 	if RD2Version != nil then RD_AddResource(self, "energy", 0) end
 	self:SetRadius(self.MaxRadius)
@@ -72,8 +66,13 @@ function ENT:Think()
 end
 
 function ENT:DomeTakeDamage(dmginfo)
-	local Drain = dmginfo:GetDamage() * (self.Radius / self.MaxRadius)
+	local Drain = dmginfo:GetDamage() * (self:GetRadius() / self.MaxRadius)
 	self:SetEnergy(self:GetEnergy() - Drain)
+	
+	local ed = EffectData()
+		ed:SetOrigin(dmginfo:GetDamagePosition())
+		ed:SetStart(dmginfo:GetDamagePosition()-self:GetPos())
+	util.Effect("wds2_shieldhit", ed)
 end
 
 function ENT:DomePhysicsCollide(data,physobj)
@@ -86,8 +85,8 @@ function ENT:SetEnergy(val)
 end
 
 function ENT:SetRadius(val)
-	self.Radius = math.Clamp(val,128,self.MaxRadius)
-	self.Scale = self.Radius / self.MaxRadius
+	self.dt.Radius = math.Clamp(val,128,self.MaxRadius)
+	self.Scale = self.dt.Radius / self.MaxRadius
 end
 
 function ENT:CreateDome()
@@ -96,7 +95,7 @@ function ENT:CreateDome()
 	self.ShieldDome:SetPos(self:LocalToWorld(self:OBBCenter()))
 	self.ShieldDome:SetAngles(self:GetAngles())
 	self.ShieldDome:SetParent(self)
-	self.ShieldDome.Generator = self
+	self.ShieldDome.dt.Generator = self
 	self.ShieldDome:Spawn()
 	self.ShieldDome:Activate()
 	self.ShieldDome.dt.Scale = self.Scale

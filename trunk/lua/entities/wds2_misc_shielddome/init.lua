@@ -16,19 +16,13 @@ function ENT:Initialize()
 end
 
 function ENT:Think()
-	//self:CheckColor()
-	if !IsValid(self.Generator) then self:Remove() end
-end
-
-function ENT:CheckColor()
-	self:SetColor(Color(255,255,255, 40 + (math.sin(CurTime()) * 20)))
-	PrintTable(self:GetColor())
+	if !IsValid(self.dt.Generator) then self:Remove() end
 end
 
 function ENT:OnTakeDamage(...)
-	self.Generator:DomeTakeDamage(...)
+	self.dt.Generator:DomeTakeDamage(...)
 end
 
 function ENT:PhysicsCollide(...)
-	self.Generator:DomePhysicsCollide(...)
+	self.dt.Generator:DomePhysicsCollide(...)
 end

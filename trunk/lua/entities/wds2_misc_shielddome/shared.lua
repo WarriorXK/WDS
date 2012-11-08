@@ -15,5 +15,5 @@ ENT.AdminSpawnable	= false
 ENT.NoPhysgunPickup	= true
 
 function ENT:SetupDataTables()
-	self:DTVar("Int",0,"Scale")
+	self:DTVar("Entity",0,"Generator")
 end
