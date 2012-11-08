@@ -43,7 +43,7 @@ function ENT:Think()
 			if self.SpinPercentage > 30 then
 			
 				self:FireShot()
-				self.NextFire = CurTime() + 1.1 - (self.SpinPercentage / 100)
+				self.NextFire = CurTime() + (1.1 - (self.SpinPercentage / 100))
 				
 			end
 		else

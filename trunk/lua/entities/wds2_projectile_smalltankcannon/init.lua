@@ -48,7 +48,11 @@ function ENT:Explode(pos)
 end
 
 function ENT:PhysicsUpdate(phys)
+
 	if IsValid(phys) then
-		phys:ApplyForceOffset( Vector(0, 0, -70), self:GetForward() * 5 )
+	
+		phys:ApplyForceOffset( Vector(0, 0, -150 * GetConVarNumber("phys_timescale")), self:GetForward() * 5 )
+		
 	end
+	
 end
