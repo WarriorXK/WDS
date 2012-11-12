@@ -21,6 +21,7 @@ ENT.HasCharge = false
 ENT.LastShot = 0
 
 function ENT:Initialize()
+
 	self:SetModel("models/wds/device01.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
@@ -29,31 +30,47 @@ function ENT:Initialize()
 	if phys:IsValid() then
 		phys:Wake()
 	end
-	self.Inputs = Wire_CreateInputs(self,{"Fire", "Penetrate"})
-	self.Outputs = Wire_CreateOutputs(self,{"Can Fire","Charge"})
+	
+	self.Inputs = Wire_CreateInputs(self, {"Fire", "Penetrate"})
+	self.Outputs = Wire_CreateOutputs(self, {"Can Fire","Charge"})
+	
 end
 
 function ENT:SpawnFunction(p,t)
+
 	if !t.Hit then return end
+	
 	local e = ents.Create(self.ClassName)
 	e.WDSO = p
 	e:Spawn()
 	e:Activate()
-	e:SetPos(t.HitPos+t.HitNormal*-e:OBBMins().z)
+	e:SetPos(t.HitPos + t.HitNormal * -e:OBBMins().z)
+	
 	return e
+	
 end
 
 function ENT:Think()
-	if self.LastShot+5 <= CurTime() and IsValid(self.AmmoCapsule) and self.AmmoCapsule.HasCharge then
+
+	if self.LastShot + 5 <= CurTime() and IsValid(self.AmmoCapsule) and self.AmmoCapsule.HasCharge then
+	
 		if self.ShouldFire then
+		
 			self:FireShot()
+			
 		end
+		
 		Wire_TriggerOutput(self,"Can Fire",1)
+		
 	else
+	
 		Wire_TriggerOutput(self,"Can Fire",0)
+		
 	end
+	
 	self:NextThink(CurTime()+0.1)
 	return true
+	
 end
 
 function ENT:Touch(ent)
@@ -61,17 +78,22 @@ function ENT:Touch(ent)
 end
 
 function ENT:AttemptAmmoConnect(ent)
+
 	if IsValid(ent) and !IsValid(self.AmmoCapsule) and ent:GetClass() == "wds2_ammo_railgun" and ent.HasCharge then
+	
 		self.AmmoCapsule = ent
 		ent:SetAngles(self:LocalToWorldAngles(AmmoAng))
 		ent:SetPos(self:LocalToWorld(AmmoPos))
 		ent:SetParent(self)
 		constraint.Weld(self,ent,0,0,0)
 		ent:EmitSound(AmmoSound)
+		
 	end
+	
 end
 
 function ENT:FireShot()
+
 	local Pos = self:LocalToWorld(BarrelExit)
 
 	local tr = WDS2.TraceLine(self:GetPos(),self:GetPos()+(self:GetForward()*50000),{self})
@@ -98,8 +120,11 @@ function ENT:FireShot()
 	else
 	
 		if IsValid(tr.Entity) then
-			WDS2.DealDirectDamage(tr.Entity,500,"AT")
+		
+			WDS2.DealDirectDamage( tr.Entity, 500, "AT" )
+			
 		end
+		
 		WDS2.CreateExplosion(tr.HitPos, 70, 300, self)
 
 		local ed = EffectData()
@@ -180,9 +205,15 @@ function ENT:FireShot()
 end
 
 function ENT:TriggerInput(name,val)
+
 	if name == "Fire" then
+	
 		self.ShouldFire = tobool(val)
+		
 	elseif name == "Penetrate" then
+	
 		self.PenetrationShot = tobool(val)
+		
 	end
+	
 end
