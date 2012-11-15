@@ -28,11 +28,11 @@ SWEP.NextCharge = 0
 SWEP.NextJump = 0
 
 if SERVER then
-	include("server.lua")
-	AddCSLuaFile("client.lua")
+	include("init.lua")
+	AddCSLuaFile("cl_init.lua")
 	AddCSLuaFile("shared.lua")
 else
-	include("client.lua")
+	include("cl_init.lua")
 end
 
 function SWEP:Initialize()
