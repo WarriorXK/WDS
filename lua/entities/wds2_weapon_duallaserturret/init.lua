@@ -9,6 +9,9 @@ local LeftBarrel = Vector(42,8.3,0)
 
 ENT.ShouldFireSecondary = false
 ENT.NextSecondaryShot = 0
+ENT.NextSecondaryFire = 0
+ENT.SecondaryFireEnd = 0
+ENT.InSecondaryFire = false
 ENT.ShouldFire1 = false
 ENT.ShouldFire2 = false
 ENT.NextShot1 = 0
@@ -43,34 +46,45 @@ end
 
 function ENT:Think()
 
-	if self.NextShot1 <= CurTime() then
+	if !self.InSecondaryFire then
 	
-		if self.ShouldFire1 then self:FireShot(true) end
+		if self.NextShot1 <= CurTime() then
 		
-		Wire_TriggerOutput(self,"Can Fire1",1)
+			if self.ShouldFire1 then self:FireShot(true) end
+			
+			Wire_TriggerOutput(self,"Can Fire1",1)
+			
+		else
 		
-	else
-	
-		Wire_TriggerOutput(self,"Can Fire1",0)
+			Wire_TriggerOutput(self,"Can Fire1",0)
+			
+		end
 		
-	end
-	
-	if self.NextShot2 <= CurTime() then
-	
-		if self.ShouldFire2 then self:FireShot(false) end
+		if self.NextShot2 <= CurTime() then
 		
-		Wire_TriggerOutput(self,"Can Fire2",1)
+			if self.ShouldFire2 then self:FireShot(false) end
+			
+			Wire_TriggerOutput(self,"Can Fire2",1)
+			
+		else
 		
-	else
-	
-		Wire_TriggerOutput(self,"Can Fire2",0)
+			Wire_TriggerOutput(self,"Can Fire2",0)
+			
+		end
 		
-	end
-	
-	if self.NextSecondaryShot <= CurTime() then
-	
-		if self.ShouldFireSecondary then self:FireSecondary() end
-	
+		if self.NextSecondaryFire <= CurTime() then
+		
+			if self.ShouldFireSecondary then self.InSecondaryFire = true self.SecondaryFireEnd = CurTime() + 5 end
+		
+		end
+		
+	elseif self.NextSecondaryShot <= CurTime() then
+		
+		self:FireSecondary()
+		self.NextSecondaryShot = CurTime()+0.1
+		
+		if self.SecondaryFireEnd <= CurTime() then self.InSecondaryFire = false end
+		
 	end
 	
 	self:NextThink(CurTime())
@@ -79,6 +93,7 @@ function ENT:Think()
 end
 
 function ENT:FireShot(IsLeftBarrel)
+
 	local Pos
 	if IsLeftBarrel then
 		Pos = LeftBarrel
@@ -111,17 +126,29 @@ function ENT:FireSecondary()
 
 	self.NextShot1 =		CurTime()+10
 	self.NextShot2 =		CurTime()+10
-	self.NextSecondaryShot =CurTime()+10
+	self.NextSecondaryFire =CurTime()+10
 	
 	for i=0,1 do
 	
-		local Pos = i == 1 and LeftBarrel or RightBarrel
+		local Pos = self:LocalToWorld(i == 1 and LeftBarrel or RightBarrel)
 		
 		local tr = WDS2.TraceLine(Pos, Pos + (self:GetForward() * 256), {self})
 		
+		local ed = EffectData()
+			ed:SetStart(Pos)
+			ed:SetOrigin(tr.HitPos)
+		util.Effect("wds2_duallaser_pulse", ed)
+		
 		if tr.Hit then
 			
+			local DmgInfo = DamageInfo()
+				DmgInfo:SetAttacker(self.WDSO)
+				DmgInfo:SetInflictor(self)
+				DmgInfo:SetDamageType(DMG_DISSOLVE)
+				DmgInfo:SetDamage(math.random(15,30))
+			tr.Entity:TakeDamageInfo(DmgInfo)
 			
+			WDS2.DealDirectDamage(tr.Entity, 10, "AT")
 			
 		end
 	

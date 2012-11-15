@@ -206,7 +206,7 @@ function WDS2.PropDeath(ent)
 		
 	end
 	
-	self:SetParent(nil)	
+	ent:SetParent(nil)	
 	constraint.RemoveAll(ent)
 	
 	table.insert(WDS2.DyingProps, ent)
