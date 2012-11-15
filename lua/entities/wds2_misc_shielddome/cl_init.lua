@@ -1,6 +1,5 @@
 include('shared.lua')
 
-local EffectColor = Color(255, 255, 255, 255)
 local EffectMat = Material("wds/effects/shieldsphere")
 
 ENT.CurSize = 1024
@@ -11,7 +10,7 @@ function ENT:Draw()
 	
 		local Normal = (LocalPlayer():GetPos()-self:GetPos()):GetNormalized()
 		render.SetMaterial(EffectMat)
-		render.DrawSphere( self:GetPos(), self.CurSize / 2, 35, 35, EffectColor )
+		render.DrawSphere( self:GetPos(), self.CurSize / 2, 35, 35, self:GetColor())
 		
 	end
 	

@@ -3,6 +3,7 @@ AddCSLuaFile("shared.lua")
 include('shared.lua')
 
 function ENT:Initialize()
+
 	self:SetModel("models/wds/1024shield.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_NONE)
@@ -11,8 +12,10 @@ function ENT:Initialize()
 	if phys:IsValid() then
 		phys:Wake()
 	end
+	
 	self:SetRenderMode(RENDERMODE_TRANSTEXTURE)
 	self:DrawShadow(false)
+	
 end
 
 function ENT:Think()
@@ -26,3 +29,15 @@ end
 function ENT:PhysicsCollide(...)
 	self.dt.Generator:DomePhysicsCollide(...)
 end
+
+hook.Add("WDS2_EntityShouldTakeDamage", "WDS2_EntityShouldTakeDamage_shieldgen", function(ent, damage)
+
+	if IsValid(ent) and ent:GetClass() == "wds2_misc_shielddome" then
+	
+		local dmginfo = DamageInfo()
+		dmginfo:SetDamage(damage)
+		ent:TakeDamage(dmginfo)
+		
+	end
+	
+end)
