@@ -2,7 +2,7 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-local FireSound = Sound("wds2/weapons/smalltankcannon/fire.wav")
+local FireSound = Sound("wds/weapons/smalltankcannon/fire.wav")
 
 local BarrelExit = Vector(52,0,0)
 

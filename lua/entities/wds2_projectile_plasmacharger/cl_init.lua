@@ -1,6 +1,6 @@
 include('shared.lua')
 
-local LoopSound = Sound("wds2/weapons/plasmacharger/projectile_loop.wav")
+local LoopSound = Sound("wds/weapons/plasmacharger/projectile_hum.wav")
 local Col = Color(75,180,255,255)
 
 function ENT:Initialize()

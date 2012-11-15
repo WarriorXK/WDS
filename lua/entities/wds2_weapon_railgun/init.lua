@@ -9,9 +9,9 @@ local AmmoExitPos = Vector(-68.3390,0,18.3)
 local AmmoPos = Vector(-68.3390,0,13.8042)
 local AmmoAng = Angle(0,90,180)
 
-local ExplosionSound = Sound("wds2/weapons/railgun/explosion.wav")
-local ShootSound = Sound("wds2/weapons/railgun/fire.wav")
-local AmmoSound = Sound("wds2/weapons/railgun/ammo.wav")
+local ExplosionSound =	Sound("wds/weapons/railgun/explosion.wav")
+local ShootSound =		Sound("wds/weapons/railgun/fire.wav")
+local AmmoSound =		Sound("wds/weapons/railgun/ammo.wav")
 
 ENT.MaxPenetrations = 5
 
