@@ -18,6 +18,7 @@ ENT.MaxEnergy = 1000
 ENT.MaxRadius = 1024
 
 function ENT:SetupDataTables()
+	self:DTVar("Entity",0,"ShieldDome")
 	self:DTVar("Int",0,"Energy")
 	self:DTVar("Int",1,"Radius")
 end

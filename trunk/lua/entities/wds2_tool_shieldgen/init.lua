@@ -38,7 +38,7 @@ end
 function ENT:Think()
 	if self.ShouldBeOn and !self.Drained then
 		if self:GetEnergy() >= math.max(self.DrainPerThink, 1) then
-			if !IsValid(self.ShieldDome) then
+			if !IsValid(self.dt.ShieldDome) then
 				self:CreateDome()
 			end
 			self:SetEnergy(self:GetEnergy() - self.DrainPerThink)
@@ -46,8 +46,8 @@ function ENT:Think()
 			self.Drained = true
 		end
 	else
-		if IsValid(self.ShieldDome) then
-			self.ShieldDome:Remove()
+		if IsValid(self.dt.ShieldDome) then
+			self.dt.ShieldDome:Remove()
 		end
 	end
 	local EnergyDrained = 0
@@ -66,13 +66,19 @@ function ENT:Think()
 end
 
 function ENT:DomeTakeDamage(dmginfo)
+
 	local Drain = dmginfo:GetDamage() * (self:GetRadius() / self.MaxRadius)
 	self:SetEnergy(self:GetEnergy() - Drain)
 	
 	local ed = EffectData()
+		ed:SetMagnitude(1)
 		ed:SetOrigin(dmginfo:GetDamagePosition())
 		ed:SetStart(dmginfo:GetDamagePosition()-self:GetPos())
+		
+		local Col = self.dt.ShieldDome:GetColor()
+		ed:SetAngles(Angle(Col.r, Col.g, Col.b))
 	util.Effect("wds2_shieldhit", ed)
+	
 end
 
 function ENT:DomePhysicsCollide(data,physobj)
@@ -90,16 +96,16 @@ function ENT:SetRadius(val)
 end
 
 function ENT:CreateDome()
-	if IsValid(self.ShieldDome) then self.ShieldDome:Remove() end
-	self.ShieldDome = ents.Create("wds2_misc_shielddome")
-	self.ShieldDome:SetPos(self:LocalToWorld(self:OBBCenter()))
-	self.ShieldDome:SetAngles(self:GetAngles())
-	self.ShieldDome:SetParent(self)
-	self.ShieldDome.dt.Generator = self
-	self.ShieldDome:Spawn()
-	self.ShieldDome:Activate()
-	self.ShieldDome.dt.Scale = self.Scale
-	//constraint.Weld(self, self.ShieldDome, 0, 0, 0)
+	if IsValid(self.dt.ShieldDome) then self.dt.ShieldDome:Remove() end
+	self.dt.ShieldDome = ents.Create("wds2_misc_shielddome")
+	self.dt.ShieldDome:SetPos(self:LocalToWorld(self:OBBCenter()))
+	self.dt.ShieldDome:SetAngles(self:GetAngles())
+	self.dt.ShieldDome:SetParent(self)
+	self.dt.ShieldDome.dt.Generator = self
+	self.dt.ShieldDome:Spawn()
+	self.dt.ShieldDome:Activate()
+	self.dt.ShieldDome.dt.Scale = self.Scale
+	//constraint.Weld(self, self.dt.ShieldDome, 0, 0, 0)
 end
 
 function ENT:TriggerInput(name,val)
@@ -113,11 +119,3 @@ function ENT:TriggerInput(name,val)
 		self:SetRadius(tonumber(val))
 	end
 end
-
-hook.Add("WDS2_EntityShouldTakeDamage", "WDS2_EntityShouldTakeDamage_shieldgen", function(ent, damage)
-	if IsValid(ent) and ent:GetClass() == "wds2_misc_shielddome" then
-		local dmginfo = DamageInfo()
-		dmginfo:SetDamage(damage)
-		ent.Generator:TakeDamage(dmginfo)
-	end
-end)
