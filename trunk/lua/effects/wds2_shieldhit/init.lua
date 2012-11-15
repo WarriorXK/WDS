@@ -6,9 +6,9 @@ function EFFECT:Init(d)
 	local Size = d:GetMagnitude() == 0 and 1 or d:GetMagnitude()
 	local Vec = d:GetStart()
 	local Pos = d:GetOrigin()
+	local Shield = d:GetEntity()
 	
 	local AngCol = d:GetAngles()
-	local Col = Color(255, 255, 255)
 
 	local Emitter = ParticleEmitter(Pos)
 	
@@ -27,14 +27,7 @@ function EFFECT:Init(d)
 		Particle:SetRoll(0)
 		Particle:SetRollDelta(0)
 		
-		print("\n")
-		PrintTable(Col)
-		print(AngCol.p, AngCol.y, AngCol.r)
-		
-		Col.r = math.Rand(AngCol.p - 10, AngCol.p + 10)
-		Col.g = math.Rand(AngCol.y - 10, AngCol.y + 10)
-		Col.b = math.Rand(AngCol.r - 10, AngCol.r + 10)
-		
+		local Col = Shield:GetColor()
 		Particle:SetColor(Col.r, Col.g, Col.b)
 		Particle:SetCollide(true)
 		Particle:SetCollideCallback(function(part) part:SetDieTime(0) end)
