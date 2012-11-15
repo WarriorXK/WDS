@@ -132,7 +132,7 @@ function ENT:FireSecondary()
 	
 		local Pos = self:LocalToWorld(i == 1 and LeftBarrel or RightBarrel)
 		
-		local tr = WDS2.TraceLine(Pos, Pos + (self:GetForward() * 256), {self})
+		local tr = WDS2.TraceLine(Pos, Pos + (self:GetForward() * 128), {self})
 		
 		local ed = EffectData()
 			ed:SetStart(Pos)

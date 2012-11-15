@@ -2,54 +2,91 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
+local PowerOnSound = Sound("wds/weapons/shield/poweron.wav")
+local HumSound = Sound("wds/weapons/shield/generator_hum.wav")
+
 ENT.MaxEnergyDrain = 15
 ENT.DisableEnergy = false
 ENT.EnergyDrain = ENT.MaxEnergyDrain
 ENT.ShouldBeOn = false
+ENT.IsOnline = false
 ENT.Drained = false
 ENT.Scale = 1
 
 function ENT:Initialize()
+
 	self:SetModel("models/XQM/Rails/trackball_1.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
+	
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:Wake()
 	end
+	
 	self.Inputs = Wire_CreateInputs(self,{"On", "DisableEnergy", "MaxEnergyDrain", "Radius"})
-	self.Outputs = Wire_CreateOutputs(self,{"Enabled", "Energy"})
+	self.Outputs = Wire_CreateOutputs(self,{"Online", "Energy"})
+	
 	if RD2Version != nil then RD_AddResource(self, "energy", 0) end
+	
 	self:SetRadius(self.MaxRadius)
 	self:SetEnergy(self.MaxEnergy)
+	
+	self.HumSound = CreateSound(self, HumSound)
+	self.HumSound:ChangeVolume(10, 0)
+	
 end
 
 function ENT:SpawnFunction(p,t)
+
 	if !t.Hit then return end
+	
 	local e = ents.Create(self.ClassName)
 	e.WDSO = p
 	e:Spawn()
 	e:Activate()
 	e:SetPos(t.HitPos+t.HitNormal*-e:OBBMins().z)
+	
 	return e
 end
 
 function ENT:Think()
+
 	if self.ShouldBeOn and !self.Drained then
 		if self:GetEnergy() >= math.max(self.DrainPerThink, 1) then
+			
+			if !self.IsOnline then
+			
+				self:EmitSound(PowerOnSound)
+				self.HumSound:Play()
+				
+			end
+			
+			self.IsOnline = true
+			
 			if !IsValid(self.dt.ShieldDome) then
 				self:CreateDome()
 			end
+			
 			self:SetEnergy(self:GetEnergy() - self.DrainPerThink)
+			
 		else
+		
+			self.HumSound:Stop()
+			self.IsOnline = false
 			self.Drained = true
+			
 		end
+		
 	else
-		if IsValid(self.dt.ShieldDome) then
-			self.dt.ShieldDome:Remove()
-		end
+	
+		self.HumSound:Stop()
+		self.IsOnline = false
+		if IsValid(self.dt.ShieldDome) then self.dt.ShieldDome:Remove() end
+		
 	end
+	
 	local EnergyDrained = 0
 	if RD2Version != nil and !self.DisableEnergy then // RD2 stuff
 		local Enrg = RD_GetResourceAmount(self, "energy")
@@ -59,8 +96,12 @@ function ENT:Think()
 			EnergyDrained = Drain
 		end
 	end
+	
+	Wire_TriggerOutput(self, "Online", self.IsOnline and 1 or 0)
+	
 	self:SetEnergy(self:GetEnergy() + EnergyDrained)
 	if self.Drained and self:GetEnergy() >= self.DrainedThreshold then self.Drained = false end
+	
 	self:NextThink(CurTime())
 	return true
 end
