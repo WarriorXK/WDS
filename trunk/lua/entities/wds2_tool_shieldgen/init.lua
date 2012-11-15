@@ -2,7 +2,7 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-local PowerOnSound = Sound("wds/weapons/shield/poweron.wav")
+//local PowerOnSound = Sound("wds/weapons/shield/poweron.wav")
 local HumSound = Sound("wds/weapons/shield/generator_hum.wav")
 
 ENT.MaxEnergyDrain = 15
@@ -58,7 +58,7 @@ function ENT:Think()
 			
 			if !self.IsOnline then
 			
-				self:EmitSound(PowerOnSound)
+				//self:EmitSound(PowerOnSound)
 				self.HumSound:Play()
 				
 			end
