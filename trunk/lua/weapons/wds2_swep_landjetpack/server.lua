@@ -1,6 +1,4 @@
 
-local VectForward = Vector(1,0,0)
-
 WDS2.Jetpack = {}
 WDS2.Jetpack.AreAllowed = true
 WDS2.Jetpack.MaxEnergy = 80
@@ -99,11 +97,14 @@ function SWEP:Think()
 					end
 				end
 			end
+			self.ThrustSound:Play()
 			self.dt.Flying = true
 		else
+			self.ThrustSound:Stop()
 			self.dt.Flying = false
 		end
 	else
+		self.ThrustSound:Stop()
 		self.dt.Flying = false
 	end
 	if !self.dt.Flying and self.dt.JetCharge < WDS2.Jetpack.MaxEnergy and self.NextCharge <= CurTime() and !self.Owner:KeyDown(IN_JUMP) then
