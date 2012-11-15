@@ -2,7 +2,7 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-local FireSound = Sound("wds2/weapons/duallaserturret/fire.wav")
+local FireSound = Sound("wds/weapons/duallaserturret/fire.wav")
 
 local RightBarrel = Vector(42,-8.3,0)
 local LeftBarrel = Vector(42,8.3,0)

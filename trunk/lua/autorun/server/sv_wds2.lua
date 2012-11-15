@@ -20,6 +20,8 @@ WDS2.MaxEntityHealth = 10000000
 WDS2.EntityDefaultHealth = 500
 WDS2.ForceResources = false
 
+WDS2.NewMaterialLog = WDS2.Debug.Enabled
+
 function WDS2.InitProp(ent, health, armor, armortype)
 
 	ent.WDS2 = {}
@@ -86,7 +88,7 @@ function WDS2.CalcArmor(ent)
 	
 	if Tab and Tab.Armor then return math.max(tonumber(Tab.Armor), 1) end
 	
-	WDS2.Log("New Material found : "..tostring(Mat))
+	if WDS2.LogNewMaterials then WDS2.Log("New Material found : "..tostring(Mat)) end
 	
 	return 1 // Todo : Maybe a formula of sorts?
 end
@@ -281,7 +283,8 @@ function WDS2.Init()
 	
 	if file.IsDir(path, base) then
 	
-		for _,fil in pairs(file.Find(path.."/*", base)) do
+		local Files, Dirs = file.Find(path.."/*", base)
+		for _,fil in pairs(Files) do
 		
 			WDS2.Debug.Print("\t\t- Loading file '"..tostring(fil).."'")
 			
@@ -306,7 +309,8 @@ function WDS2.Init()
 	
 	if file.IsDir(path, base) then
 	
-		for _,fil in pairs(file.Find(path.."/*", base)) do
+		local Files, Dirs = file.Find(path.."/*", base)
+		for _,fil in pairs(Files) do
 		
 			WDS2.Debug.Print("\t\t- Loading file '"..tostring(fil).."'")
 			
@@ -338,7 +342,7 @@ function WDS2.Init()
 			WDS2.AddResourceDir(path, "GAME")
 		end
 		
-		path = "sound/wds2"
+		path = "sound/wds"
 		if file.IsDir(path, "GAME") then
 			WDS2.AddResourceDir(path, "GAME")
 		end
@@ -352,6 +356,13 @@ function WDS2.Init()
 	print("\n============ WDS2 - Files loaded =============")
 	
 end
+
+function WDS2.ShutDown()
+	
+	
+	
+end
+hook.Add("ShutDown", "WDS2.ShutDown", WDS2.ShutDown)
 
 function WDS2.AddResourceDir(path, base)
 

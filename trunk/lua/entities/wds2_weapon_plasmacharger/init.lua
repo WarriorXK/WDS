@@ -2,8 +2,8 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-local ChargeSound = Sound("wds2/weapons/plasmacharger/charge.wav")
-local FireSound = Sound("wds2/weapons/plasmacharger/fire.wav")
+local ChargeSound = Sound("wds/weapons/plasmacharger/charge.wav")
+local FireSound = Sound("wds/weapons/plasmacharger/fire.wav")
 
 ENT.NextDischarge = 0
 ENT.ChargeDelay = 0

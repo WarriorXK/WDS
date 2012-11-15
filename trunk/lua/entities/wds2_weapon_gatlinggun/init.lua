@@ -2,7 +2,7 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-local FireSound = Sound("wds2/weapons/gatlinggun/fire.wav")
+local FireSound = Sound("wds/weapons/gatlinggun/fire.wav")
 
 ENT.ShootPosses =	{
 						Vector(29,-1.2,6.4),

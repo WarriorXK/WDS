@@ -2,9 +2,9 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-local ActivateSound = Sound("wds2/weapons/tanksmine/activate.wav")
-local ChargeSound = Sound("wds2/weapons/tankmine/charge.wav")
-local AttachSound = Sound("wds2/weapons/tankmine/attack.wav")
+local ActivateSound =	Sound("wds/weapons/tanksmine/activate.wav")
+local ChargeSound =		Sound("wds/weapons/tankmine/charge.wav")
+local AttachSound =		Sound("wds/weapons/tankmine/attack.wav")
 
 ENT.IsBeingHeld = false
 ENT.IsExploding = false
