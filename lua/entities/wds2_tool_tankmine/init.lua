@@ -109,10 +109,10 @@ function ENT:Explode()
 	self.IsExploding = true
 
 	local EffectBall = ents.Create("prop_combine_ball")
-	EffectBall:SetPos(self.Entity:GetPos())
+	EffectBall:SetPos(self:GetPos())
 	EffectBall:Spawn()
-	EffectBall:Fire("explode","",0)
-	EffectBall:Fire("kill","", 0)
+	EffectBall:Fire("explode", "", 0)
+	EffectBall:Fire("kill", "", 0)
 	
 	local DmgInfo = DamageInfo()
 	DmgInfo:SetAttacker(self.WDSO)

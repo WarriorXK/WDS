@@ -24,5 +24,5 @@ end
 
 function ENT:GetTrace()
 	local Pos = self:LocalToWorld(self.LaserPos)
-	return WDS2.TraceLine(Pos,Pos+(self:GetForward()*50000),{self})
+	return WDS2.TraceLine(Pos, Pos + (self:GetForward()*50000), {self})
 end

@@ -7,6 +7,8 @@ local FireSound = Sound("wds/weapons/duallaserturret/fire.wav")
 local RightBarrel = Vector(42,-8.3,0)
 local LeftBarrel = Vector(42,8.3,0)
 
+ENT.ShouldFireSecondary = false
+ENT.NextSecondaryShot = 0
 ENT.ShouldFire1 = false
 ENT.ShouldFire2 = false
 ENT.NextShot1 = 0
@@ -21,39 +23,59 @@ function ENT:Initialize()
 	if phys:IsValid() then
 		phys:Wake()
 	end
-	self.Inputs = Wire_CreateInputs(self,{"Fire1","Fire2"})
-	self.Outputs = Wire_CreateOutputs(self,{"Can Fire1","Can Fire2"})
+	self.Inputs = Wire_CreateInputs(self, {"Fire1", "Fire2", "Secondary Fire"})
+	self.Outputs = Wire_CreateOutputs(self, {"Can Fire1", "Can Fire2", "Can Fire Secondary"})
 end
 
 function ENT:SpawnFunction(p,t)
+
 	if !t.Hit then return end
+	
 	local e = ents.Create(self.ClassName)
 	e.WDSO = p
 	e:Spawn()
 	e:Activate()
 	e:SetPos(t.HitPos+t.HitNormal*-e:OBBMins().z)
+	
 	return e
+	
 end
 
 function ENT:Think()
+
 	if self.NextShot1 <= CurTime() then
-		if self.ShouldFire1 then
-			self:FireShot(true)
-		end
+	
+		if self.ShouldFire1 then self:FireShot(true) end
+		
 		Wire_TriggerOutput(self,"Can Fire1",1)
+		
 	else
+	
 		Wire_TriggerOutput(self,"Can Fire1",0)
+		
 	end
+	
 	if self.NextShot2 <= CurTime() then
-		if self.ShouldFire2 then
-			self:FireShot(false)
-		end
+	
+		if self.ShouldFire2 then self:FireShot(false) end
+		
 		Wire_TriggerOutput(self,"Can Fire2",1)
+		
 	else
+	
 		Wire_TriggerOutput(self,"Can Fire2",0)
+		
 	end
+	
+	if self.NextSecondaryShot <= CurTime() then
+	
+		if self.ShouldFireSecondary then self:FireSecondary() end
+	
+	end
+	
 	self:NextThink(CurTime())
 	return true
+	
 end
 
 function ENT:FireShot(IsLeftBarrel)
@@ -85,10 +107,42 @@ function ENT:FireShot(IsLeftBarrel)
 
 end
 
-function ENT:TriggerInput(name,val)
-	if name == "Fire1" then
-		self.ShouldFire1 = tobool(val)
-	elseif name == "Fire2" then
-		self.ShouldFire2 = tobool(val)
+function ENT:FireSecondary()
+
+	self.NextShot1 =		CurTime()+10
+	self.NextShot2 =		CurTime()+10
+	self.NextSecondaryShot =CurTime()+10
+	
+	for i=0,1 do
+	
+		local Pos = i == 1 and LeftBarrel or RightBarrel
+		
+		local tr = WDS2.TraceLine(Pos, Pos + (self:GetForward() * 256), {self})
+		
+		if tr.Hit then
+			
+			
+			
+		end
+	
 	end
+
+end
+
+function ENT:TriggerInput(name,val)
+
+	if name == "Fire1" then
+	
+		self.ShouldFire1 = tobool(val)
+		
+	elseif name == "Fire2" then
+	
+		self.ShouldFire2 = tobool(val)
+		
+	elseif name == "Secondary Fire" then
+	
+		self.ShouldFireSecondary = tobool(val)
+		
+	end
+	
 end
