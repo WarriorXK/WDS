@@ -74,9 +74,7 @@ function ENT:DomeTakeDamage(dmginfo)
 		ed:SetMagnitude(1)
 		ed:SetOrigin(dmginfo:GetDamagePosition())
 		ed:SetStart(dmginfo:GetDamagePosition()-self:GetPos())
-		
-		local Col = self.dt.ShieldDome:GetColor()
-		ed:SetAngles(Angle(Col.r, Col.g, Col.b))
+		ed:SetEntity(self)
 	util.Effect("wds2_shieldhit", ed)
 	
 end
@@ -96,7 +94,9 @@ function ENT:SetRadius(val)
 end
 
 function ENT:CreateDome()
+
 	if IsValid(self.dt.ShieldDome) then self.dt.ShieldDome:Remove() end
+	
 	self.dt.ShieldDome = ents.Create("wds2_misc_shielddome")
 	self.dt.ShieldDome:SetPos(self:LocalToWorld(self:OBBCenter()))
 	self.dt.ShieldDome:SetAngles(self:GetAngles())
@@ -105,7 +105,7 @@ function ENT:CreateDome()
 	self.dt.ShieldDome:Spawn()
 	self.dt.ShieldDome:Activate()
 	self.dt.ShieldDome.dt.Scale = self.Scale
-	//constraint.Weld(self, self.dt.ShieldDome, 0, 0, 0)
+	
 end
 
 function ENT:TriggerInput(name,val)

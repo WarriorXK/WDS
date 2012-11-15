@@ -196,7 +196,7 @@ function WDS2.PropDeath(ent)
 	if WDS2.EntHasValidTable(ent) then ent.WDS2.Dead = true end
 	
 	local Phys = ent:GetPhysicsObject()
-	if IsValid(Phys)
+	if IsValid(Phys) then
 	
 		Phys:EnableGravity(false)
 		Phys:EnableMotion(true)
