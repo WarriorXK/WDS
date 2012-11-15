@@ -1,4 +1,3 @@
-
 SWEP.PrintName				= "Land Jetpack"			
 SWEP.Author					= "WarriorXK/kevkev"
 SWEP.Slot					= 4
@@ -19,8 +18,8 @@ SWEP.Primary.Automatic		= false
 SWEP.Primary.ClipSize		= 6
 SWEP.Primary.DefaultClip	= 30
 SWEP.Primary.Ammo			= ""
-SWEP.Secondary.ClipSize		= maxfuel
-SWEP.Secondary.DefaultClip	= maxfuel
+SWEP.Secondary.ClipSize		= 0
+SWEP.Secondary.DefaultClip	= 0
 SWEP.Secondary.Automatic	= true
 SWEP.Secondary.Ammo			= ""
 
@@ -28,16 +27,16 @@ SWEP.NextCharge = 0
 SWEP.NextJump = 0
 
 if SERVER then
-	include("init.lua")
-	AddCSLuaFile("cl_init.lua")
+	include("server.lua")
+	AddCSLuaFile("client.lua")
 	AddCSLuaFile("shared.lua")
 else
-	include("cl_init.lua")
+	include("client.lua")
 end
-
 function SWEP:Initialize()
 	if SERVER then
 		self.dt.JetCharge = WDS2.Jetpack.MaxEnergy
+		self.ThrustSound = CreateSound(self, "wds/weapons/jetpack/thrust.wav")
 	end
 	self:SetWeaponHoldType( self.HoldType )
 end
