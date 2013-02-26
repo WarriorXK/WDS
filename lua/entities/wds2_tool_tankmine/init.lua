@@ -2,7 +2,7 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 
-local ActivateSound =	Sound("wds/weapons/tanksmine/activate.wav")
+local ActivateSound =	Sound("wds/weapons/tankmine/activate.wav")
 local ChargeSound =		Sound("wds/weapons/tankmine/charge.wav")
 local AttachSound =		Sound("wds/weapons/tankmine/attack.wav")
 
@@ -49,7 +49,7 @@ function ENT:SpawnFunction(p,t)
 	e:Activate()
 	e:SetPos( t.HitPos + t.HitNormal * -e:OBBMins().z )
 	e.ChargeSound = CreateSound( e, ChargeSound )
-	e.ChargeSound:ChangeVolume( 10, 0 )
+	e.ChargeSound:ChangeVolume( 20, 0 )
 	return e
 	
 end
