@@ -3,7 +3,7 @@
 	"name"			"WDamageSystem"
 	"version"		"2.0"
 	"up_date"		""
-	"author_name"	"Warrior xXx - kevkev"
+	"author_name"	"WarriorXK aka. kialtia"
 	"author_email"	"kevkevm@gmail.com"
 	"author_url"	""
 	"info"			"A prop and entity damage system."
