@@ -4,6 +4,7 @@ include('shared.lua')
 
 ENT.DepletedColor = Color(255,40,40,255)
 ENT.ChargedColor = Color(40,255,40,255)
+ENT.IsInserted = false
 ENT.HasCharge = true
 
 function ENT:Initialize()
