@@ -79,9 +79,10 @@ end
 
 function ENT:AttemptAmmoConnect(ent)
 
-	if IsValid(ent) and !IsValid(self.AmmoCapsule) and ent:GetClass() == "wds2_ammo_railgun" and ent.HasCharge then
+	if IsValid(ent) and !IsValid(self.AmmoCapsule) and ent:GetClass() == "wds2_ammo_railgun" and ent.HasCharge and !ent.IsInserted then
 	
 		self.AmmoCapsule = ent
+		ent.IsInserted = true
 		ent:SetAngles(self:LocalToWorldAngles(AmmoAng))
 		ent:SetPos(self:LocalToWorld(AmmoPos))
 		ent:SetParent(self)
