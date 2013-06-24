@@ -69,7 +69,7 @@ function WDS2.GravGunPickup(ply, ent)
 	end
 	if ent.NoGravGunPickup then return false end
 end
-hook.Add("GravGunPickup","WDS2.GravGunPickup",WDS2.GravGunPickup)
+hook.Add("GravGunPickupAllowed","WDS2.GravGunPickup",WDS2.GravGunPickup)
 
 function WDS2.ShouldCollide(e1,e2)
 	if WDS2.NoProjectileTouch[e1:GetClass()] == e2:GetClass() or WDS2.NoProjectileTouch[e2:GetClass()] == e1:GetClass() then return false end
