@@ -32,8 +32,8 @@ end
 
 function ENT:Think()
 	if self.NextDamage <= CurTime() then
-		local Rad = (CurTime() - self.CreationTime) * 300
-		if Rad < 35 then Rad = 35 end
+		local Rad = 13 * math.Max(15 * (CurTime() - self.CreationTime), 1)
+		if Rad < 20 then Rad = 20 end
 		
 		local Pos = self:GetPos()
 		local Dmg = 20
@@ -51,13 +51,14 @@ function ENT:Think()
 						DmgInfo:SetDamage(Dmg * Mul)
 						v:TakeDamageInfo(DmgInfo)
 						if math.random(1,3) == 2 then print(v:Ignite(30)) end
+						print(Rad)
 					else
 						// Entitys take damage here.
 					end
 				end
 			end
 		end
-		self.NextDamage = CurTime() + 0.1
+		self.NextDamage = CurTime() + 0.05
 	end
 	
 	if self.DeathTime < CurTime() then
@@ -81,16 +82,21 @@ function ENT:PhysicsCollide(data,physobj)
 end
 
 function ENT:Die(ent)
+
 	if IsValid(ent) then
+	
 		local DmgInfo = DamageInfo()
 		DmgInfo:SetAttacker(IsValid(self.WDSO) and self.WDSO or self)
 		DmgInfo:SetInflictor(IsValid(self.Cannon) and self.Cannon or self)
 		DmgInfo:SetDamageType(DMG_BURN)
 		DmgInfo:SetDamage(math.random(40,60))
 		ent:TakeDamageInfo(DmgInfo)
+		
 	end
+	
 	local ed = EffectData()
 		ed:SetOrigin(self:GetPos())
 	util.Effect("wds2_flamethrower_death",ed)
+	
 	self:Remove()
 end
