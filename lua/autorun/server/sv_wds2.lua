@@ -13,7 +13,9 @@ WDS2.ProtectedClasses = {
 							"predicted_viewmodel",
 							"scene_manager",
 							"prop_combine_ball",
-							"crossbow_bolt"
+							"crossbow_bolt",
+							"gmod_gamerules",
+							"ai_network"
 						}
 
 WDS2.MaxEntityHealth = 10000000
