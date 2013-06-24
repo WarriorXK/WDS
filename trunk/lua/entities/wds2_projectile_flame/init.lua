@@ -5,10 +5,13 @@ include('shared.lua')
 ENT.NextDamage = 0
 
 function ENT:Initialize()
+
 	self:SetModel("models/wds/pball.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
+	self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+	
 	local phys = self:GetPhysicsObject()
 	if phys:IsValid() then
 		phys:Wake()
@@ -16,13 +19,15 @@ function ENT:Initialize()
 		phys:EnableGravity(false)
 		phys:SetVelocityInstantaneous(self:GetForward() * (2000 + math.random(-50, 50)))
 	end
-	local Rand = math.Rand(0.6,0.8)
+	
 	local ed = EffectData()
 		ed:SetEntity(self)
 	util.Effect("wds2_flamethrower_flame",ed,true,true)
-	self.DeathTime = CurTime() + Rand
+	
+	self.DeathTime = CurTime() + math.Rand(0.7,0.8)
 	self.CreationTime = CurTime()
 	self.ImmuneToFire = true
+	
 end
 
 function ENT:Think()
@@ -35,15 +40,17 @@ function ENT:Think()
 
 		local DmgInfo = DamageInfo()
 		DmgInfo:SetAttacker(self.WDSO)
-		DmgInfo:SetInflictor(self.Cannon)
+		DmgInfo:SetInflictor(IsValid(self.Cannon) and self.Cannon or self)
 		DmgInfo:SetDamageType(DMG_BURN)
 		
 		for _,v in pairs(ents.FindInSphere(self:GetPos(), Rad)) do
 			if v != self then
 				if !v.ImmuneToFire then
 					if (v:IsPlayer() and v:Alive()) or v:IsNPC() then
-						DmgInfo:SetDamage(Dmg * math.Clamp(-((Pos:Distance(v:GetPos())/Rad)-1),0.2,1))
-						//v:TakeDamageInfo(DmgInfo)
+						local Mul = math.Clamp(-((Pos:Distance(v:GetPos())/Rad)-1),0.2,1)
+						DmgInfo:SetDamage(Dmg * Mul)
+						v:TakeDamageInfo(DmgInfo)
+						if math.random(1,3) == 2 then print(v:Ignite(30)) end
 					else
 						// Entitys take damage here.
 					end

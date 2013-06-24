@@ -5,11 +5,12 @@ local Col = Color(216,185,27,255)
 function ENT:Draw() end
 
 function ENT:Think()
+
 	if WDS2.Convars.EnableDynamicLights:GetBool() then
 		local dlight = DynamicLight(self:EntIndex())
 		if dlight then
 			local LightSize = 400 * WDS2.Convars.DynamicLightsSize:GetFloat()
-			dlight.Pos = self:LocalToWorld(self:OBBCenter())
+			dlight.Pos = self:GetPos()
 			dlight.r = Col.r
 			dlight.g = Col.g
 			dlight.b = Col.b
@@ -21,5 +22,6 @@ function ENT:Think()
 	end
 	self:NextThink(CurTime()+1)
 	return true
+	
 end
-language.Add(ENT.ClassName,ENT.PrintName)
+language.Add(ENT.ClassName, ENT.PrintName)
