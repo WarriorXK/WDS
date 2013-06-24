@@ -11,3 +11,5 @@ ENT.WireDebugName	= ENT.PrintName
 
 ENT.Spawnable		= false
 ENT.AdminSpawnable	= false
+
+ENT.NoPhysgunPickup	= true
