@@ -359,13 +359,6 @@ function WDS2.Init()
 	
 end
 
-function WDS2.ShutDown()
-	
-	
-	
-end
-hook.Add("ShutDown", "WDS2.ShutDown", WDS2.ShutDown)
-
 function WDS2.AddResourceDir(path, base)
 
 	for _,fil in pairs(file.Find(path.."/*", base)) do
