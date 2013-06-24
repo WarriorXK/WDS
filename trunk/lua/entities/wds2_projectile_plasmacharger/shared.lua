@@ -13,3 +13,4 @@ ENT.Spawnable		= false
 ENT.AdminSpawnable	= false
 
 ENT.NoPhysgunPickup	= true
+ENT.NoGravGunPickup	= true

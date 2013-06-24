@@ -16,13 +16,13 @@ function EFFECT:Think()
 	local Valid = IsValid(self.TargetEntity)
 	if self.NextFlame <= CurTime() then
 		if Valid then
-			local Mul = CurTime() - self.CreationTime
+		
 			local Flame = self.Emitter:Add("particles/flamelet"..math.random(1,5),self.TargetEntity:GetPos() + Vector(math.random(-5,5),math.random(-5,5),math.random(-5,5)))
 			//Flame:SetVelocity(self.TargetEntity:GetVelocity())
 			Flame:SetLifeTime(1)
 			Flame:SetDieTime(2)
 			Flame:SetStartAlpha(255)
-			Flame:SetStartSize(math.Rand(15,30) * (10 * Mul))
+			Flame:SetStartSize(math.Rand(15,30) * math.Max(15 * (CurTime() - self.CreationTime), 1))
 			Flame:SetEndSize(2)
 			Flame:SetRoll(math.Rand(-360,360))
 			Flame:SetRollDelta(math.Rand(-1,1))
