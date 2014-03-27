@@ -63,6 +63,7 @@ end
 hook.Add("PhysgunPickup","WDS2.PhysgunPickup",WDS2.PhysgunPickup)
 
 function WDS2.GravGunPickup(ply, ent)
+	if !ValidEntity(ent) then return end
 	if SERVER then
 		if !ent.WDS2 then
 			local succ, err = pcall(WDS2.InitProp, ent)
