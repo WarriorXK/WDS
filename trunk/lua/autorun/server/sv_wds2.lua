@@ -29,7 +29,7 @@ function WDS2.InitProp(ent, health, armor, armortype)
 	if ent == NULL then return false end
 
 	ent.WDS2 = {}
-	if !WDS2.IsValid(ent) then
+	if !IsValid(ent) then
 	
 		ent.WDS2.MaxHealth = 1
 		ent.WDS2.Health = 1
