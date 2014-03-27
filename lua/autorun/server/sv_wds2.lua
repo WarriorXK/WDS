@@ -26,8 +26,10 @@ WDS2.NewMaterialLog = WDS2.Debug.Enabled
 
 function WDS2.InitProp(ent, health, armor, armortype)
 
+	if ent == NULL then return false end
+
 	ent.WDS2 = {}
-	if !WTib.IsValid(ent) then
+	if !WDS2.IsValid(ent) then
 	
 		ent.WDS2.MaxHealth = 1
 		ent.WDS2.Health = 1
@@ -50,6 +52,8 @@ function WDS2.InitProp(ent, health, armor, armortype)
 		ent.WDS2.Dead = false
 		
 	end
+	
+	return true
 	
 end
 
